@@ -1,6 +1,6 @@
 {
   "name": "@segmento/lead",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Solana wallet signing and referral code generation for Segmento",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

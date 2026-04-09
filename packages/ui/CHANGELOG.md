@@ -1,5 +1,17 @@
 # @segmento/ui
 
+## 0.3.0
+
+### Minor Changes
+
+- 566a943: add per package readme
+
+### Patch Changes
+
+- Updated dependencies [566a943]
+  - @segmento/core@0.3.0
+  - @segmento/lead@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes
