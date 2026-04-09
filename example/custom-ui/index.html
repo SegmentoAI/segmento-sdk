@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Segmento Lead SDK — Demo</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 48px 16px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 12px;
+      padding: 32px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0 0 4px;
+    }
+
+    .subtitle {
+      color: #777;
+      font-size: 14px;
+      margin: 0 0 28px;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 13px;
+      color: #aaa;
+    }
+
+button {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+.btn-connect { background: #2563eb; color: #fff; }
+    .btn-connect:hover:not(:disabled) { background: #1d4ed8; }
+    .btn-sign    { background: #7c3aed; color: #fff; }
+    .btn-sign:hover:not(:disabled)    { background: #6d28d9; }
+
+    .status {
+      font-size: 13px;
+      color: #888;
+      min-height: 18px;
+    }
+
+    .status.ok  { color: #4ade80; }
+    .status.err { color: #f87171; }
+
+    .result-box {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+      padding: 16px;
+      background: #111;
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+    }
+
+    .result-box.visible { display: flex; }
+
+    .result-row { display: flex; flex-direction: column; gap: 3px; }
+
+    .result-key {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #555;
+    }
+
+    .result-val {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 12px;
+      color: #c4b5fd;
+      word-break: break-all;
+    }
+
+    hr { border: none; border-top: 1px solid #2e2e2e; margin: 24px 0; }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Segmento Lead SDK</h1>
+    <p class="subtitle">Full flow demo — init → connect wallet → sign &amp; submit lead</p>
+
+    <!-- Step 1: Connect wallet -->
+    <div class="step">
+      <label>Step 1 — Connect Phantom wallet</label>
+      <button class="btn-connect" id="btn-connect">Connect Wallet</button>
+      <div class="status" id="status-connect">No wallet connected</div>
+    </div>
+
+    <hr />
+
+    <!-- Step 3: Sign & submit -->
+    <div class="step">
+      <label>Step 2 — Sign message &amp; submit lead</label>
+      <button class="btn-sign" id="btn-sign" disabled>Sign &amp; Submit</button>
+      <div class="status" id="status-sign"></div>
+      <div class="result-box" id="box-sign">
+        <div class="result-row">
+          <span class="result-key">Wallet address</span>
+          <span class="result-val" id="res-address"></span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Message</span>
+          <span class="result-val" id="res-message"></span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Signature</span>
+          <span class="result-val" id="res-signature"></span>
+        </div>
+        <div class="result-row">
+          <span class="result-key">Timestamp</span>
+          <span class="result-val" id="res-ts"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { SegmentoClient, getReferralCode } from "../../packages/core/dist/index.js";
+    import { signMessage } from "../../packages/lead/dist/index.js";
+
+    const TOKEN = "eyJ2IjoxLCJwaWQiOiJwcm9qX2RlbW8xMjMiLCJuYW1lIjoiRGVtbyBQcm9qZWN0IiwiY2hrIjoiMzY3NzczYWQifQ";
+
+    // Initialised immediately by the developer — not user-facing
+    const client       = SegmentoClient.init(TOKEN);
+    const referralCode = getReferralCode(); // reads ?ref= from URL
+
+    const btnConnect = document.getElementById("btn-connect");
+    const btnSign    = document.getElementById("btn-sign");
+
+    let walletAdapter = null;
+
+    // ── Step 2: Connect wallet ──────────────────────────────────────────────────
+
+    btnConnect.addEventListener("click", async () => {
+      const statusEl = document.getElementById("status-connect");
+      const phantom  = window?.solana;
+
+      if (!phantom?.connect) {
+        statusEl.textContent = "Phantom wallet not found — install it at phantom.app";
+        statusEl.className   = "status err";
+        return;
+      }
+
+      try {
+        const resp      = await phantom.connect();
+        const publicKey = resp.publicKey;
+
+        walletAdapter = {
+          publicKey: { toBase58: () => publicKey.toBase58() },
+          signMessage: (bytes) => phantom.signMessage(bytes, "utf8").then(r => r.signature),
+        };
+
+        statusEl.textContent = `Connected: ${publicKey.toBase58()}`;
+        statusEl.className   = "status ok";
+        btnConnect.textContent = "Reconnect";
+        btnSign.disabled = false;
+      } catch (err) {
+        statusEl.textContent = `Connection failed: ${err.message}`;
+        statusEl.className   = "status err";
+      }
+    });
+
+    // ── Step 3: Sign & submit ───────────────────────────────────────────────────
+
+    btnSign.addEventListener("click", async () => {
+      const statusEl = document.getElementById("status-sign");
+      const boxEl    = document.getElementById("box-sign");
+
+      statusEl.textContent = "Waiting for wallet signature…";
+      statusEl.className   = "status";
+      boxEl.classList.remove("visible");
+      btnSign.disabled = true;
+
+      try {
+        // Sign the message — produces a SolanaWalletPayload
+        const walletPayload = await signMessage(walletAdapter);
+
+        // Submit the lead; project_id is injected by the client automatically
+        await client.submitLead({
+          referral_code: referralCode ?? undefined,
+          solana_wallet: {
+            wallet_address: walletPayload.address,
+            message:        walletPayload.message,
+            signature:      walletPayload.signature,
+            timestamp:      walletPayload.ts,
+          },
+        });
+
+        // Show what was signed
+        document.getElementById("res-address").textContent   = walletPayload.address;
+        document.getElementById("res-message").textContent   = walletPayload.message;
+        document.getElementById("res-signature").textContent = walletPayload.signature;
+        document.getElementById("res-ts").textContent        =
+          `${walletPayload.ts} (${new Date(walletPayload.ts).toISOString()})`;
+
+        statusEl.textContent = "Lead submitted successfully";
+        statusEl.className   = "status ok";
+        boxEl.classList.add("visible");
+      } catch (err) {
+        statusEl.textContent = `Error: ${err.message}`;
+        statusEl.className   = "status err";
+      } finally {
+        btnSign.disabled = false;
+      }
+    });
+  </script>
+</body>
+
+</html>

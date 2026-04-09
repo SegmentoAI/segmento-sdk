@@ -1,0 +1,18 @@
+{
+  "name": "segmento-sdk",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r run build",
+    "dev": "pnpm -r run dev --if-present",
+    "lint": "pnpm -r run lint --if-present",
+    "test": "pnpm -r run test --if-present",
+    "clean": "pnpm -r run clean --if-present",
+    "example": "npx serve . --listen 3333 --no-clipboard",
+    "example:ui": "npx serve . --listen 3333 --no-clipboard --open example/ui-package/index.html",
+    "example:custom": "npx serve . --listen 3333 --no-clipboard --open example/custom-ui/index.html"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
