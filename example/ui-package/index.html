@@ -8,17 +8,14 @@
   <script type="importmap">
     {
       "imports": {
-        "@segmento/core": "../../packages/core/dist/index.js",
-        "@segmento/lead": "../../packages/lead/dist/index.js"
+        "@segmento/core": "https://esm.sh/@segmento/core",
+        "@segmento/lead": "https://esm.sh/@segmento/lead",
+        "@segmento/ui":   "https://esm.sh/@segmento/ui"
       }
     }
   </script>
   <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -33,16 +30,8 @@
       gap: 16px;
     }
 
-    h1 {
-      font-size: 20px;
-      margin: 0;
-    }
-
-    p {
-      color: #666;
-      font-size: 14px;
-      margin: 0;
-    }
+    h1 { font-size: 20px; margin: 0; }
+    p  { color: #666; font-size: 14px; margin: 0; }
 
     button {
       padding: 12px 28px;
@@ -56,9 +45,7 @@
       transition: background 0.15s;
     }
 
-    button:hover {
-      background: #6d28d9;
-    }
+    button:hover { background: #6d28d9; }
   </style>
 </head>
 
@@ -68,17 +55,16 @@
   <button id="open-btn">Open Referral Modal</button>
 
   <script type="module">
-    import { SegmentoClient } from "../../packages/core/dist/index.js";
-    import { SegmentoModal, defineSegmentoModal } from "../../packages/ui/dist/index.js";
+    import { SegmentoClient } from "@segmento/core";
+    import { defineSegmentoModal, SegmentoModal } from "@segmento/ui";
 
-    // Register the custom element
+    // Register the custom element and configure required fields
     defineSegmentoModal({ telegramRequired: true, walletRequired: true });
 
-    // Developer initialises the client once with their project token
+    // Initialise with your project token (from the Segmento dashboard)
     const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoidGVzdCBwcm9qZWN0IiwiY2hrIjoiZmZjYjQzNDUifQ";
-    const client = SegmentoClient.init(TOKEN, { baseUrl: "http://localhost:3001/manager-api" });
+    const client = SegmentoClient.init(TOKEN);
 
-    // Instantiate the modal
     const modal = new SegmentoModal({
       client,
 
@@ -100,8 +86,6 @@
         setTimeout(() => modal.close(), 1500);
       },
     });
-
-    document.body.appendChild(modal);
 
     document.getElementById("open-btn").addEventListener("click", () => modal.open());
   </script>
