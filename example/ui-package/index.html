@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +14,11 @@
     }
   </script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -28,8 +33,16 @@
       gap: 16px;
     }
 
-    h1 { font-size: 20px; margin: 0; }
-    p  { color: #666; font-size: 14px; margin: 0; }
+    h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    p {
+      color: #666;
+      font-size: 14px;
+      margin: 0;
+    }
 
     button {
       padding: 12px 28px;
@@ -42,24 +55,28 @@
       cursor: pointer;
       transition: background 0.15s;
     }
-    button:hover { background: #6d28d9; }
+
+    button:hover {
+      background: #6d28d9;
+    }
   </style>
 </head>
+
 <body>
   <h1>Segmento UI Demo</h1>
   <p>Uses <code>@segmento/ui</code> — modal is a shadow-DOM custom element</p>
   <button id="open-btn">Open Referral Modal</button>
 
   <script type="module">
-    import { SegmentoClient }              from "../../packages/core/dist/index.js";
+    import { SegmentoClient } from "../../packages/core/dist/index.js";
     import { SegmentoModal, defineSegmentoModal } from "../../packages/ui/dist/index.js";
 
     // Register the custom element
     defineSegmentoModal({ telegramRequired: true, walletRequired: true });
 
     // Developer initialises the client once with their project token
-    const TOKEN = "eyJ2IjoxLCJwaWQiOiJwcm9qX2RlbW8xMjMiLCJuYW1lIjoiRGVtbyBQcm9qZWN0IiwiY2hrIjoiMzY3NzczYWQifQ";
-    const client = SegmentoClient.init(TOKEN);
+    const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoidGVzdCBwcm9qZWN0IiwiY2hrIjoiZmZjYjQzNDUifQ";
+    const client = SegmentoClient.init(TOKEN, { baseUrl: "http://localhost:3001/manager-api" });
 
     // Instantiate the modal
     const modal = new SegmentoModal({
@@ -70,7 +87,7 @@
         const phantom = window?.solana;
         if (!phantom?.connect) throw new Error("Phantom wallet not found — install it at phantom.app");
 
-        const resp      = await phantom.connect();
+        const resp = await phantom.connect();
         const publicKey = resp.publicKey;
 
         return {
@@ -89,4 +106,5 @@
     document.getElementById("open-btn").addEventListener("click", () => modal.open());
   </script>
 </body>
+
 </html>

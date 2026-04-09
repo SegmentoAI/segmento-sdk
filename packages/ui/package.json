@@ -13,6 +13,9 @@
     }
   },
   "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@segmento/core": "workspace:*",
     "@segmento/lead": "workspace:*"

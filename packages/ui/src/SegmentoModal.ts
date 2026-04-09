@@ -1,6 +1,7 @@
 import { signMessage, getSignMessage } from "@segmento/lead";
 import type { WalletAdapter } from "@segmento/lead";
 import type { SegmentoClient } from "@segmento/core";
+import { getReferralCode } from "@segmento/core";
 
 export interface RequiredFieldsConfig {
   /** Telegram field must be filled before submitting. Default: false */
@@ -346,6 +347,7 @@ export class SegmentoModal extends HTMLElement {
       await this.opts.client.submitLead({
         email: email || undefined,
         telegram: telegram || undefined,
+        referral_code: getReferralCode() ?? "",
         solana_wallet: this.signedPayload
           ? {
               wallet_address: this.signedPayload.address,

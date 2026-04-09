@@ -7,12 +7,15 @@
     "lint": "pnpm -r run lint --if-present",
     "test": "pnpm -r run test --if-present",
     "clean": "pnpm -r run clean --if-present",
+    "version": "pnpm changeset version",
+    "release": "pnpm build && pnpm changeset publish",
     "example": "npx serve . --listen 3333 --no-clipboard",
     "example:ui": "npx serve . --listen 3333 --no-clipboard --open example/ui-package/index.html",
     "example:custom": "npx serve . --listen 3333 --no-clipboard --open example/custom-ui/index.html"
   },
   "packageManager": "pnpm@9.0.0",
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
     "typescript": "^5.4.0"
   }
 }

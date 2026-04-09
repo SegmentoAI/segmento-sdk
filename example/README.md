@@ -69,7 +69,7 @@ Tests the drop-in modal component from `@segmento/ui`.
 Both demos use the same hardcoded mock token:
 
 ```
-eyJ2IjoxLCJwaWQiOiJwcm9qX2RlbW8xMjMiLCJuYW1lIjoiRGVtbyBQcm9qZWN0IiwiY2hrIjoiMzY3NzczYWQifQ
+eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoidGVzdCBwcm9qZWN0IiwiY2hrIjoiZmZjYjQzNDUifQ
 ```
 
 Decodes to:
