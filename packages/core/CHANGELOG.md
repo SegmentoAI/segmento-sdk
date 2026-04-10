@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.4.0
+
+### Minor Changes
+
+- 9226086: rename ui to waitlist-ui
+
 ## 0.3.0
 
 ### Minor Changes
