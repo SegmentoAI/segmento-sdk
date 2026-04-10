@@ -8,7 +8,7 @@ TypeScript SDK for Solana wallet-based lead and referral capture. Collect waitli
 | --------------------------------- | ------------------------------------------------------ |
 | [`@segmento/core`](packages/core) | API client, token validation, referral code extraction |
 | [`@segmento/lead`](packages/lead) | Solana wallet signing                                  |
-| [`@segmento/ui`](packages/ui)     | Drop-in modal web component                            |
+| [`@segmento/waitlist-ui`](packages/waitlist-ui)     | Drop-in modal web component                            |
 
 ---
 
@@ -17,30 +17,24 @@ TypeScript SDK for Solana wallet-based lead and referral capture. Collect waitli
 The fastest integration. One custom element handles wallet connect, message signing, and submission.
 
 ```bash
-npm install @segmento/core @segmento/lead @segmento/ui
+npm install @segmento/core @segmento/lead @segmento/waitlist-ui
 ```
 
 ```ts
 import { SegmentoClient } from "@segmento/core";
-import { defineSegmentoModal, SegmentoModal } from "@segmento/ui";
+import { defineSegmentoModal, SegmentoModal } from "@segmento/waitlist-ui";
 
-// Register the custom element and set required fields globally
+// Initialise once — stored globally, no need to pass it to the modal
+SegmentoClient.init("your_project_token");
+
+// Register the custom element and set required fields
 defineSegmentoModal({
   emailRequired: true,
   walletRequired: true,
 });
 
-// Initialise with your project token (from the Segmento dashboard)
-const client = SegmentoClient.init("your_project_token");
-
-// Create and open the modal
+// Create and open the modal — client and wallet connection are automatic
 const modal = new SegmentoModal({
-  client,
-  onConnectWallet: async () => {
-    // Return any object with `publicKey.toBase58()` and `signMessage(bytes)`
-    // e.g. window.solana from Phantom
-    return window.solana;
-  },
   onSuccess: () => console.log("Lead submitted!"),
 });
 
@@ -53,11 +47,8 @@ All colors are optional — defaults work out of the box.
 
 ```ts
 defineSegmentoModal({
-  bgColor: "#18181b",
-  primaryColor: "#6366f1",
-  secondaryColor: "#10b981",
-  textColor: "#fafafa",
-  labelColor: "#71717a",
+  bgColor:      "#0c1117",
+  primaryColor: "#5ee9b5",
 });
 ```
 
@@ -71,7 +62,8 @@ Use `@segmento/core` and `@segmento/lead` directly if you want full control over
 import { SegmentoClient, getReferralCode } from "@segmento/core";
 import { signMessage } from "@segmento/lead";
 
-const client = SegmentoClient.init("your_project_token");
+SegmentoClient.init("your_project_token");
+const client = SegmentoClient.getInstance();
 
 // Sign with the user's wallet
 const payload = await signMessage(wallet, client.projectName);

@@ -10,12 +10,16 @@
       "imports": {
         "@segmento/core": "https://esm.sh/@segmento/core",
         "@segmento/lead": "https://esm.sh/@segmento/lead",
-        "@segmento/ui":   "https://esm.sh/@segmento/ui"
+        "@segmento/waitlist-ui":   "https://esm.sh/@segmento/waitlist-ui"
       }
     }
   </script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -30,8 +34,16 @@
       gap: 16px;
     }
 
-    h1 { font-size: 20px; margin: 0; }
-    p  { color: #666; font-size: 14px; margin: 0; }
+    h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    p {
+      color: #666;
+      font-size: 14px;
+      margin: 0;
+    }
 
     button {
       padding: 12px 28px;
@@ -45,43 +57,29 @@
       transition: background 0.15s;
     }
 
-    button:hover { background: #6d28d9; }
+    button:hover {
+      background: #6d28d9;
+    }
   </style>
 </head>
 
 <body>
   <h1>Segmento UI Demo</h1>
-  <p>Uses <code>@segmento/ui</code> — modal is a shadow-DOM custom element</p>
+  <p>Uses <code>@segmento/waitlist-ui</code> — modal is a shadow-DOM custom element</p>
   <button id="open-btn">Open Referral Modal</button>
 
   <script type="module">
     import { SegmentoClient } from "@segmento/core";
-    import { defineSegmentoModal, SegmentoModal } from "@segmento/ui";
+    import { defineSegmentoModal, SegmentoModal } from "@segmento/waitlist-ui";
+
+    // Initialise once — stored globally, picked up automatically by any modal
+    const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoidGVzdCBwcm9qZWN0IiwiY2hrIjoiZmZjYjQzNDUifQ";
+    SegmentoClient.init(TOKEN);
 
     // Register the custom element and configure required fields
     defineSegmentoModal({ telegramRequired: true, walletRequired: true });
 
-    // Initialise with your project token (from the Segmento dashboard)
-    const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoidGVzdCBwcm9qZWN0IiwiY2hrIjoiZmZjYjQzNDUifQ";
-    const client = SegmentoClient.init(TOKEN);
-
     const modal = new SegmentoModal({
-      client,
-
-      // Wallet connection is provided by the developer — here we wire Phantom
-      onConnectWallet: async () => {
-        const phantom = window?.solana;
-        if (!phantom?.connect) throw new Error("Phantom wallet not found — install it at phantom.app");
-
-        const resp = await phantom.connect();
-        const publicKey = resp.publicKey;
-
-        return {
-          publicKey: { toBase58: () => publicKey.toBase58() },
-          signMessage: (bytes) => phantom.signMessage(bytes, "utf8").then(r => r.signature),
-        };
-      },
-
       onSuccess: () => {
         setTimeout(() => modal.close(), 1500);
       },

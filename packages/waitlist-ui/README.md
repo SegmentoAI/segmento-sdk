@@ -1,18 +1,21 @@
-# @segmento/ui
+# @segmento/waitlist-ui
 
 Drop-in referral modal for the [Segmento](https://segmento.tech) SDK. A shadow-DOM custom element that handles wallet connect, message signing, and lead submission — no framework required.
 
 ## Installation
 
 ```bash
-npm install @segmento/ui @segmento/core @segmento/lead
+npm install @segmento/waitlist-ui @segmento/core @segmento/lead
 ```
 
 ## Usage
 
 ```ts
 import { SegmentoClient } from "@segmento/core";
-import { defineSegmentoModal, SegmentoModal } from "@segmento/ui";
+import { defineSegmentoModal, SegmentoModal } from "@segmento/waitlist-ui";
+
+// Initialise once — stored globally, no need to pass it to the modal
+SegmentoClient.init("your_project_token");
 
 // Register the custom element and set required fields
 defineSegmentoModal({
@@ -21,20 +24,8 @@ defineSegmentoModal({
   telegramRequired: false,
 });
 
-// Initialise the client with your project token
-const client = SegmentoClient.init("your_project_token");
-
-// Create the modal
+// Create the modal — client is resolved automatically from the global instance
 const modal = new SegmentoModal({
-  client,
-  onConnectWallet: async () => {
-    // Return any object with publicKey.toBase58() and signMessage(bytes)
-    const resp = await window.solana.connect();
-    return {
-      publicKey: { toBase58: () => resp.publicKey.toBase58() },
-      signMessage: (bytes) => window.solana.signMessage(bytes, "utf8").then(r => r.signature),
-    };
-  },
   onSuccess: () => console.log("Lead submitted!"),
   onClose:   () => console.log("Modal closed"),
 });
@@ -61,9 +52,9 @@ Per-instance options (extend `RequiredFieldsConfig`):
 
 | Option | Type | Required | Description |
 |---|---|---|---|
-| `client` | `SegmentoClient` | Yes | Initialised Segmento client |
-| `onConnectWallet` | `() => Promise<WalletAdapter>` | Yes | Called when user clicks "Connect Wallet" |
-| `title` | `string` | No | Modal heading (default: `"Join the referral program"`) |
+| `client` | `SegmentoClient` | No | Client instance. Defaults to the global set by `SegmentoClient.init()` |
+| `onConnectWallet` | `() => Promise<WalletAdapter>` | No | Custom wallet connection. Defaults to `window.solana` |
+| `title` | `string` | No | Modal heading (default: `"Join the waitlist"`) |
 | `onSuccess` | `() => void` | No | Called after successful submission |
 | `onClose` | `() => void` | No | Called when modal is dismissed |
 
@@ -73,11 +64,11 @@ All colors are CSS strings and optional.
 
 | Option | Default | Description |
 |---|---|---|
-| `bgColor` | `#0f172b` | Modal background |
-| `primaryColor` | `#5ee9b5` | Submit button, focus rings |
-| `secondaryColor` | `#f472b6` | Success states, signed wallet button |
-| `textColor` | `#f1f5f9` | Headings and input values |
-| `labelColor` | `#94a3b8` | Field labels and muted text |
+| `bgColor` | `#0c1117` | Modal background |
+| `primaryColor` | `#5ee9b5` | Submit button, focus rings, wallet button |
+| `secondaryColor` | `#5ee9b5` | Success states, signed wallet button |
+| `textColor` | `#f0f6fc` | Headings and input values |
+| `labelColor` | `#6b7f99` | Field labels and muted text |
 
 ```ts
 defineSegmentoModal({

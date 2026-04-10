@@ -1,4 +1,4 @@
-# @segmento/ui
+# @segmento/waitlist-ui
 
 ## 0.4.0
 

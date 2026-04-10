@@ -9,8 +9,8 @@ import type { ApiOptions, SubmitLeadRequest } from "./types.js";
  * @example
  * import { SegmentoClient } from "@segmento/core";
  *
- * const segmento = SegmentoClient.init("your_project_token");
- * console.log(segmento.projectId, segmento.projectName);
+ * // Call once — instance is stored globally and picked up by any modal automatically
+ * SegmentoClient.init("your_project_token");
  */
 export class SegmentoClient {
   /** Decoded project ID from the token */
@@ -22,7 +22,11 @@ export class SegmentoClient {
   private readonly apiOptions: ApiOptions;
   private readonly decoded: TokenPayload;
 
-  private constructor(token: string, decoded: TokenPayload, apiOptions: ApiOptions) {
+  private constructor(
+    token: string,
+    decoded: TokenPayload,
+    apiOptions: ApiOptions,
+  ) {
     this.token = token;
     this.decoded = decoded;
     this.projectId = decoded.pid;
@@ -39,7 +43,16 @@ export class SegmentoClient {
    */
   static init(token: string, options: ApiOptions = {}): SegmentoClient {
     const decoded = decodeToken(token);
-    return new SegmentoClient(token, decoded, options);
+    const instance = new SegmentoClient(token, decoded, options);
+    (window as unknown as { __segmento: SegmentoClient }).__segmento = instance;
+    return instance;
+  }
+
+  /** Returns the instance stored by the last {@link SegmentoClient.init} call, or null. */
+  static getInstance(): SegmentoClient | null {
+    return (
+      (window as unknown as { __segmento?: SegmentoClient }).__segmento ?? null
+    );
   }
 
   /**
@@ -49,6 +62,9 @@ export class SegmentoClient {
   async submitLead(
     request: Omit<SubmitLeadRequest, "project_id">,
   ): Promise<void> {
-    return submitLead({ ...request, project_id: this.projectId }, this.apiOptions);
+    return submitLead(
+      { ...request, project_id: this.projectId },
+      this.apiOptions,
+    );
   }
 }

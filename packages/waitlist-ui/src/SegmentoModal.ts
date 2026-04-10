@@ -1,6 +1,6 @@
 import { signMessage, getSignMessage } from "@segmento/lead";
 import type { WalletAdapter } from "@segmento/lead";
-import type { SegmentoClient } from "@segmento/core";
+import { SegmentoClient } from "@segmento/core";
 import { getReferralCode } from "@segmento/core";
 
 export interface RequiredFieldsConfig {
@@ -23,10 +23,18 @@ export interface RequiredFieldsConfig {
 }
 
 export interface SegmentoModalOptions extends RequiredFieldsConfig {
-  /** Initialised SegmentoClient instance */
-  client: SegmentoClient;
-  /** Called when the user clicks "Connect Wallet". Should resolve with a WalletAdapter. */
-  onConnectWallet: () => Promise<WalletAdapter>;
+  /**
+   * Initialised SegmentoClient instance. If omitted, falls back to the instance
+   * stored by the last `SegmentoClient.init()` call (`window.__segmento`).
+   * Throws if neither is available.
+   */
+  client?: SegmentoClient;
+  /**
+   * Called when the user clicks "Connect Wallet". Must resolve with a WalletAdapter.
+   * Defaults to connecting via `window.solana`, which is the standard injection point
+   * for Solana browser wallets.
+   */
+  onConnectWallet?: () => Promise<WalletAdapter>;
   /** Modal heading. Defaults to "Join the referral program". */
   title?: string;
   /** Called after the lead is successfully submitted. */
@@ -43,14 +51,21 @@ export const _defaultConfig: RequiredFieldsConfig = {};
 export class SegmentoModal extends HTMLElement {
   private shadow: ShadowRoot;
   private opts: SegmentoModalOptions;
+  private client: SegmentoClient;
   private wallet: WalletAdapter | null = null;
   private walletState: WalletState = "disconnected";
   private signedPayload: Awaited<ReturnType<typeof signMessage>> | null = null;
 
   constructor(options: SegmentoModalOptions) {
     super();
-    // Merge module-level defaults so per-instance options take precedence
     this.opts = { ..._defaultConfig, ...options };
+    const client = this.opts.client ?? SegmentoClient.getInstance();
+    if (!client) {
+      throw new Error(
+        "Segmento: no client provided. Call SegmentoClient.init(token) before creating a modal.",
+      );
+    }
+    this.client = client;
     this.shadow = this.attachShadow({ mode: "open" });
   }
 
@@ -318,17 +333,18 @@ export class SegmentoModal extends HTMLElement {
       status.className = "status";
 
       try {
-        this.wallet = await this.opts.onConnectWallet();
+        const connectWallet = this.opts.onConnectWallet ?? defaultConnectWallet;
+        this.wallet = await connectWallet();
         this.walletState = "connected";
         btn.textContent = "Sign Message";
         btn.disabled = false;
-        status.textContent = `Wallet connected: ${this.wallet.publicKey?.toBase58().slice(0, 8)}…`;
+        status.textContent = `Wallet connected: ${this.wallet!.publicKey!.toBase58().slice(0, 8)}…`;
         status.className = "status ok";
 
         // Show the exact message the user is about to sign
         const preview =
           this.shadow.querySelector<HTMLDivElement>("#sg-sign-preview")!;
-        const msg = getSignMessage(this.opts.client.projectName);
+        const msg = getSignMessage(this.client.projectName);
         const tc =
           "https://github.com/SegmentoAI/terms-and-conditions/blob/v1.0/terms.md";
         preview.innerHTML = escapeHtml(msg).replace(
@@ -354,7 +370,7 @@ export class SegmentoModal extends HTMLElement {
     try {
       this.signedPayload = await signMessage(
         this.wallet!,
-        this.opts.client.projectName,
+        this.client.projectName,
       );
       this.walletState = "signed";
       btn.textContent = "✓ Message Signed";
@@ -392,7 +408,7 @@ export class SegmentoModal extends HTMLElement {
         .querySelector<HTMLInputElement>("#sg-telegram")!
         .value.trim();
 
-      await this.opts.client.submitLead({
+      await this.client.submitLead({
         email: email || undefined,
         telegram: telegram || undefined,
         referral_code: getReferralCode() ?? "",
@@ -466,6 +482,17 @@ export class SegmentoModal extends HTMLElement {
 
     return ok;
   }
+}
+
+async function defaultConnectWallet(): Promise<WalletAdapter> {
+  const solana = (window as unknown as Record<string, unknown>)["solana"] as WalletAdapter | undefined;
+  if (!solana) {
+    throw new Error("No Solana wallet found. Please install a browser wallet.");
+  }
+  if (typeof (solana as unknown as { connect?: () => Promise<unknown> }).connect === "function") {
+    await (solana as unknown as { connect: () => Promise<unknown> }).connect();
+  }
+  return solana;
 }
 
 function escapeHtml(s: string): string {

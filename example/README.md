@@ -16,7 +16,7 @@ pnpm demo           # serve the root at http://localhost:3333
 Then open:
 
 - `http://localhost:3333/example/demo.html` — `@segmento/core` + `@segmento/lead` demo
-- `http://localhost:3333/example/demo-ui.html` — `@segmento/ui` modal demo
+- `http://localhost:3333/example/demo-ui.html` — `@segmento/waitlist-ui` modal demo
 
 ---
 
@@ -41,7 +41,7 @@ Tests the lower-level packages directly without the UI modal.
 
 ## demo-ui.html — UI Modal
 
-Tests the drop-in modal component from `@segmento/ui`.
+Tests the drop-in modal component from `@segmento/waitlist-ui`.
 
 **Flow:**
 
@@ -60,7 +60,7 @@ Tests the drop-in modal component from `@segmento/ui`.
 - Sign message preview rendered inside the modal after wallet connection, including the T&C link
 - `onSuccess` callback closing the modal automatically after submission
 
-**Relevant packages:** `@segmento/core`, `@segmento/lead`, `@segmento/ui`
+**Relevant packages:** `@segmento/core`, `@segmento/lead`, `@segmento/waitlist-ui`
 
 ---
 
