@@ -10,15 +10,15 @@ export interface RequiredFieldsConfig {
   emailRequired?: boolean;
   /** Wallet must be connected and message signed before submitting. Default: false */
   walletRequired?: boolean;
-  /** Modal background color. Default: #0f172b */
+  /** Modal background color. Default: #0c1117 */
   bgColor?: string;
-  /** Primary action color — submit button, focus rings, required markers. Default: #5ee9b5 */
+  /** Primary action color — submit button, focus rings, wallet button. Default: #5ee9b5 */
   primaryColor?: string;
-  /** Secondary color — success states, signed wallet button. Default: #f472b6 */
+  /** Secondary color — success states, signed wallet button. Default: #5ee9b5 */
   secondaryColor?: string;
-  /** Main text color — headings and input values. Default: #f1f5f9 */
+  /** Main text color — headings and input values. Default: #f0f6fc */
   textColor?: string;
-  /** Label / muted text color — field labels, placeholders, status text. Default: #94a3b8 */
+  /** Label / muted text color — field labels, placeholders, status text. Default: #6b7f99 */
   labelColor?: string;
 }
 
@@ -75,15 +75,15 @@ export class SegmentoModal extends HTMLElement {
 
   private render() {
     const { telegramRequired, emailRequired, walletRequired } = this.opts;
-    const title = this.opts.title ?? "Join the referral program";
+    const title = this.opts.title ?? "Join the waitlist";
     const req = (flag?: boolean) =>
-      flag ? ' <span style="color:#ef4444">*</span>' : "";
+      flag ? ' <span class="req-star">*</span>' : "";
 
-    const bgColor        = this.opts.bgColor        ?? "#18181b";
-    const primaryColor   = this.opts.primaryColor   ?? "#6366f1";
-    const secondaryColor = this.opts.secondaryColor ?? "#10b981";
-    const textColor      = this.opts.textColor      ?? "#fafafa";
-    const labelColor     = this.opts.labelColor     ?? "#71717a";
+    const bgColor        = this.opts.bgColor        ?? "#0c1117";
+    const primaryColor   = this.opts.primaryColor   ?? "#5ee9b5";
+    const secondaryColor = this.opts.secondaryColor ?? "#5ee9b5";
+    const textColor      = this.opts.textColor      ?? "#f0f6fc";
+    const labelColor     = this.opts.labelColor     ?? "#6b7f99";
 
     this.shadow.innerHTML = /* html */ `
       <style>
@@ -98,117 +98,165 @@ export class SegmentoModal extends HTMLElement {
         }
 
         dialog {
-          border: none; border-radius: 14px; padding: 28px 28px 24px;
-          width: calc(100% - 32px); max-width: 420px;
+          border: 1.5px solid color-mix(in srgb, var(--sg-primary) 16%, transparent);
+          border-radius: 18px;
+          padding: 0;
+          width: calc(100% - 32px); max-width: 440px;
           background: var(--sg-bg);
-          box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+          box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px color-mix(in srgb, var(--sg-primary) 5%, transparent);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          overflow: hidden;
         }
-        dialog::backdrop { background: rgba(0,0,0,0.55); }
+        dialog::backdrop {
+          background: rgba(4,8,15,0.78);
+          backdrop-filter: blur(4px);
+        }
+
+        .modal-inner { padding: 28px 28px 26px; }
+
+        .modal-brand {
+          font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+          color: var(--sg-primary); text-transform: uppercase; margin-bottom: 14px;
+        }
 
         .modal-header {
-          display: flex; align-items: center; justify-content: space-between;
-          margin-bottom: 20px;
+          display: flex; align-items: flex-start; justify-content: space-between;
+          margin-bottom: 24px;
         }
-        .modal-title { margin: 0; font-size: 18px; font-weight: 700; color: var(--sg-text); }
+        .modal-title {
+          margin: 0; font-size: 20px; font-weight: 700;
+          color: var(--sg-text); line-height: 1.3;
+        }
 
         .close-btn {
-          background: none; border: none; cursor: pointer;
-          color: var(--sg-label); font-size: 20px; line-height: 1; padding: 2px 4px;
+          background: none; border: none; cursor: pointer; margin-top: 3px;
+          color: var(--sg-label); font-size: 18px; line-height: 1; padding: 2px 4px;
+          flex-shrink: 0; transition: color 0.15s;
         }
         .close-btn:hover { color: var(--sg-text); }
 
-        .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
-        .field-label { font-size: 13px; font-weight: 500; color: var(--sg-label); }
+        .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+        .field-label {
+          font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+          text-transform: uppercase; color: var(--sg-label);
+        }
+        .req-star { color: #ef4444; }
 
         .field-input {
-          padding: 9px 11px;
-          border: 1.5px solid color-mix(in srgb, var(--sg-text) 15%, transparent);
-          border-radius: 8px;
+          padding: 11px 14px;
+          border: 1.5px solid color-mix(in srgb, var(--sg-text) 10%, transparent);
+          border-radius: 10px;
           font-size: 14px; color: var(--sg-text);
-          background: color-mix(in srgb, var(--sg-bg) 80%, black);
-          outline: none; transition: border-color 0.15s;
+          background: color-mix(in srgb, var(--sg-bg) 55%, black);
+          outline: none;
+          transition: border-color 0.15s, box-shadow 0.15s;
         }
-        .field-input:focus { border-color: var(--sg-primary); }
-        .field-input.err   { border-color: #ef4444; }
-        .field-input::placeholder { color: var(--sg-label); opacity: 0.5; }
+        .field-input:focus {
+          border-color: color-mix(in srgb, var(--sg-primary) 55%, transparent);
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--sg-primary) 10%, transparent);
+        }
+        .field-input.err { border-color: #ef4444; }
+        .field-input::placeholder { color: var(--sg-label); opacity: 0.45; }
 
         .field-error { font-size: 12px; color: #ef4444; display: none; }
         .field-error.show { display: block; }
 
-        .divider { border: none; border-top: 1px solid #1e293b; margin: 16px 0; }
+        .divider {
+          border: none;
+          border-top: 1px solid color-mix(in srgb, var(--sg-text) 7%, transparent);
+          margin: 18px 0;
+        }
+
+        .section-label {
+          font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+          text-transform: uppercase; color: var(--sg-primary);
+          margin-bottom: 12px;
+        }
 
         .btn {
-          display: block; width: 100%; padding: 11px 16px;
-          border: none; border-radius: 9px;
+          display: block; width: 100%; padding: 12px 16px;
+          border-radius: 10px;
           font-size: 14px; font-weight: 600; cursor: pointer;
-          transition: background 0.15s, opacity 0.15s;
+          transition: background 0.15s, border-color 0.15s, opacity 0.15s;
         }
         .btn + .btn { margin-top: 8px; }
-        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn:disabled { opacity: 0.38; cursor: not-allowed; }
 
         .btn-wallet {
-          background: color-mix(in srgb, var(--sg-primary) 8%, white);
+          background: transparent;
           color: var(--sg-primary);
-          border: 1.5px solid color-mix(in srgb, var(--sg-primary) 22%, white);
+          border: 1.5px solid color-mix(in srgb, var(--sg-primary) 38%, transparent);
         }
         .btn-wallet:hover:not(:disabled) {
-          background: color-mix(in srgb, var(--sg-primary) 15%, white);
+          background: color-mix(in srgb, var(--sg-primary) 8%, transparent);
+          border-color: color-mix(in srgb, var(--sg-primary) 60%, transparent);
         }
         .btn-wallet.signed {
-          background: color-mix(in srgb, var(--sg-secondary) 10%, white);
+          background: color-mix(in srgb, var(--sg-secondary) 10%, transparent);
           color: var(--sg-secondary);
-          border-color: color-mix(in srgb, var(--sg-secondary) 28%, white);
+          border-color: color-mix(in srgb, var(--sg-secondary) 38%, transparent);
           cursor: default;
         }
 
         .sign-preview {
-          display: none; margin-bottom: 10px; padding: 12px 14px;
-          background: color-mix(in srgb, var(--sg-bg) 80%, black);
-          border: 1px solid color-mix(in srgb, var(--sg-text) 12%, transparent);
-          border-radius: 8px;
-          font-size: 12px; line-height: 1.6; color: var(--sg-label); white-space: pre-wrap;
+          display: none; margin-bottom: 12px; padding: 12px 14px;
+          background: color-mix(in srgb, var(--sg-bg) 50%, black);
+          border: 1px solid color-mix(in srgb, var(--sg-text) 8%, transparent);
+          border-radius: 10px;
+          font-size: 12px; line-height: 1.65; color: var(--sg-label); white-space: pre-wrap;
         }
         .sign-preview.show { display: block; }
         .sign-preview a { color: var(--sg-primary); }
 
-        .btn-submit { background: var(--sg-primary); color: #ffffff; margin-top: 10px; }
+        .btn-submit {
+          background: var(--sg-primary);
+          color: #0c1117;
+          border: none;
+          margin-top: 12px;
+          font-weight: 700;
+          letter-spacing: 0.01em;
+        }
         .btn-submit:hover:not(:disabled) {
-          background: color-mix(in srgb, var(--sg-primary) 85%, black);
+          background: color-mix(in srgb, var(--sg-primary) 82%, white);
         }
 
-        .status { margin-top: 12px; font-size: 13px; text-align: center; min-height: 18px; color: var(--sg-label); }
-        .status.ok  { color: var(--sg-secondary); }
-        .status.err { color: #dc2626; }
+        .status {
+          margin-top: 12px; font-size: 13px; text-align: center;
+          min-height: 18px; color: var(--sg-label);
+        }
+        .status.ok  { color: var(--sg-primary); }
+        .status.err { color: #ef4444; }
       </style>
 
       <dialog aria-labelledby="sg-title">
-        <div class="modal-header">
-          <h2 class="modal-title" id="sg-title">${escapeHtml(title)}</h2>
-          <button class="close-btn" aria-label="Close">&#x2715;</button>
+        <div class="modal-inner">
+          <div class="modal-brand">Segmento</div>
+          <div class="modal-header">
+            <h2 class="modal-title" id="sg-title">${escapeHtml(title)}</h2>
+            <button class="close-btn" aria-label="Close">&#x2715;</button>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="sg-email">Email${req(emailRequired)}</label>
+            <input class="field-input" id="sg-email" type="email" placeholder="you@example.com" autocomplete="email" />
+            <span class="field-error" id="sg-email-err"></span>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="sg-telegram">Telegram${req(telegramRequired)}</label>
+            <input class="field-input" id="sg-telegram" type="text" placeholder="@username" autocomplete="off" />
+            <span class="field-error" id="sg-telegram-err"></span>
+          </div>
+
+          <hr class="divider" />
+
+          <div class="section-label">Wallet${walletRequired ? ' <span class="req-star">*</span>' : ""}</div>
+          <div class="sign-preview" id="sg-sign-preview"></div>
+          <button class="btn btn-wallet" id="sg-wallet-btn">Connect Wallet</button>
+          <button class="btn btn-submit" id="sg-submit-btn" disabled>Submit</button>
+
+          <div class="status" id="sg-status"></div>
         </div>
-
-        <div class="field">
-          <label class="field-label" for="sg-email">Email${req(emailRequired)}</label>
-          <input class="field-input" id="sg-email" type="email" placeholder="you@example.com" autocomplete="email" />
-          <span class="field-error" id="sg-email-err"></span>
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="sg-telegram">Telegram username${req(telegramRequired)}</label>
-          <input class="field-input" id="sg-telegram" type="text" placeholder="@username" autocomplete="off" />
-          <span class="field-error" id="sg-telegram-err"></span>
-        </div>
-
-        <hr class="divider" />
-
-        <div class="sign-preview" id="sg-sign-preview"></div>
-        <button class="btn btn-wallet" id="sg-wallet-btn">
-          ${walletRequired ? "Connect Wallet *" : "Connect Wallet"}
-        </button>
-        <button class="btn btn-submit" id="sg-submit-btn" disabled>Submit</button>
-
-        <div class="status" id="sg-status"></div>
       </dialog>
     `;
   }
