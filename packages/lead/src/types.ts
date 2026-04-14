@@ -13,7 +13,7 @@ export interface SolanaWalletPayload {
 /** Minimal interface representing a Solana wallet adapter */
 export interface WalletAdapter {
   publicKey: { toBase58(): string } | null;
-  signMessage(message: Uint8Array): Promise<Uint8Array>;
+  signMessage(message: Uint8Array): Promise<Uint8Array | { signature: Uint8Array }>;
 }
 
 export interface SegmentoConfig {

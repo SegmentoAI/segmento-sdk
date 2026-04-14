@@ -29,7 +29,9 @@ export async function signMessage(
 
   const message = getSignMessage(projectName);
   const messageBytes = new TextEncoder().encode(message);
-  const signatureBytes = await wallet.signMessage(messageBytes);
+  const signResult = await wallet.signMessage(messageBytes);
+  const signatureBytes =
+    signResult instanceof Uint8Array ? signResult : signResult.signature;
 
   return {
     address: wallet.publicKey.toBase58(),
