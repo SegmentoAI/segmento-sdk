@@ -72,8 +72,7 @@
     import { defineSegmentoModal, SegmentoModal } from "@segmento/waitlist-ui";
 
     // Initialise once — stored globally, picked up automatically by any modal
-    const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoidGVzdCBwcm9qZWN0IiwiY2hrIjoiZmZjYjQzNDUifQ";
-    SegmentoClient.init(TOKEN);
+    SegmentoClient.init("eyJ2IjoxLCJwaWQiOiJteS1maXJzdC1wcm9qZWN0IiwibmFtZSI6Ik15IGZpcnN0IHByb2plY3QiLCJjaGsiOiJjMWU2ODFhMiJ9");
 
     // Register the custom element and configure required fields
     defineSegmentoModal({ telegramRequired: true, walletRequired: true });
