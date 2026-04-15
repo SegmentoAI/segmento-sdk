@@ -1,5 +1,15 @@
 # @segmento/core
 
+## 0.5.0
+
+### Minor Changes
+
+- d17887e: abstract solana package
+
+### Patch Changes
+
+- a7f9e32: fix: phantom signing
+
 ## 0.4.0
 
 ### Minor Changes
