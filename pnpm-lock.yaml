@@ -12,20 +12,20 @@ importers:
         specifier: ^2.30.0
         version: 2.30.0(@types/node@25.5.2)
       typescript:
-        specifier: ^5.4.0
-        version: 5.9.3
+        specifier: ^6.0.0
+        version: 6.0.2
 
   packages/core:
     devDependencies:
       typescript:
-        specifier: ^5.4.0
-        version: 5.9.3
+        specifier: ^6.0.0
+        version: 6.0.2
       vite:
         specifier: ^5.2.0
         version: 5.4.21(@types/node@25.5.2)
       vite-plugin-dts:
         specifier: ^3.9.0
-        version: 3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@5.9.3)(vite@5.4.21(@types/node@25.5.2))
+        version: 3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@6.0.2)(vite@5.4.21(@types/node@25.5.2))
       vitest:
         specifier: ^2.0.0
         version: 2.1.9(@types/node@25.5.2)
@@ -37,14 +37,14 @@ importers:
         version: link:../core
     devDependencies:
       typescript:
-        specifier: ^5.4.0
-        version: 5.9.3
+        specifier: ^6.0.0
+        version: 6.0.2
       vite:
         specifier: ^5.2.0
         version: 5.4.21(@types/node@25.5.2)
       vite-plugin-dts:
         specifier: ^3.9.0
-        version: 3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@5.9.3)(vite@5.4.21(@types/node@25.5.2))
+        version: 3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@6.0.2)(vite@5.4.21(@types/node@25.5.2))
       vitest:
         specifier: ^2.0.0
         version: 2.1.9(@types/node@25.5.2)
@@ -57,16 +57,16 @@ importers:
     devDependencies:
       '@solana/web3.js':
         specifier: ^1.98.0
-        version: 1.98.4(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@6.0.6)
+        version: 1.98.4(bufferutil@4.1.0)(typescript@6.0.2)(utf-8-validate@6.0.6)
       typescript:
-        specifier: ^5.4.0
-        version: 5.9.3
+        specifier: ^6.0.0
+        version: 6.0.2
       vite:
         specifier: ^5.2.0
         version: 5.4.21(@types/node@25.5.2)
       vite-plugin-dts:
         specifier: ^3.9.0
-        version: 3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@5.9.3)(vite@5.4.21(@types/node@25.5.2))
+        version: 3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@6.0.2)(vite@5.4.21(@types/node@25.5.2))
       vitest:
         specifier: ^2.0.0
         version: 2.1.9(@types/node@25.5.2)
@@ -84,14 +84,14 @@ importers:
         version: link:../solana
     devDependencies:
       typescript:
-        specifier: ^5.4.0
-        version: 5.9.3
+        specifier: ^6.0.0
+        version: 6.0.2
       vite:
         specifier: ^5.2.0
         version: 5.4.21(@types/node@25.5.2)
       vite-plugin-dts:
         specifier: ^3.9.0
-        version: 3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@5.9.3)(vite@5.4.21(@types/node@25.5.2))
+        version: 3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@6.0.2)(vite@5.4.21(@types/node@25.5.2))
 
 packages:
 
@@ -1268,8 +1268,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+  typescript@6.0.2:
+    resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -1853,30 +1853,30 @@ snapshots:
     dependencies:
       buffer: 6.0.3
 
-  '@solana/codecs-core@2.3.0(typescript@5.9.3)':
+  '@solana/codecs-core@2.3.0(typescript@6.0.2)':
     dependencies:
-      '@solana/errors': 2.3.0(typescript@5.9.3)
-      typescript: 5.9.3
+      '@solana/errors': 2.3.0(typescript@6.0.2)
+      typescript: 6.0.2
 
-  '@solana/codecs-numbers@2.3.0(typescript@5.9.3)':
+  '@solana/codecs-numbers@2.3.0(typescript@6.0.2)':
     dependencies:
-      '@solana/codecs-core': 2.3.0(typescript@5.9.3)
-      '@solana/errors': 2.3.0(typescript@5.9.3)
-      typescript: 5.9.3
+      '@solana/codecs-core': 2.3.0(typescript@6.0.2)
+      '@solana/errors': 2.3.0(typescript@6.0.2)
+      typescript: 6.0.2
 
-  '@solana/errors@2.3.0(typescript@5.9.3)':
+  '@solana/errors@2.3.0(typescript@6.0.2)':
     dependencies:
       chalk: 5.6.2
       commander: 14.0.3
-      typescript: 5.9.3
+      typescript: 6.0.2
 
-  '@solana/web3.js@1.98.4(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@6.0.6)':
+  '@solana/web3.js@1.98.4(bufferutil@4.1.0)(typescript@6.0.2)(utf-8-validate@6.0.6)':
     dependencies:
       '@babel/runtime': 7.29.2
       '@noble/curves': 1.9.7
       '@noble/hashes': 1.8.0
       '@solana/buffer-layout': 4.0.1
-      '@solana/codecs-numbers': 2.3.0(typescript@5.9.3)
+      '@solana/codecs-numbers': 2.3.0(typescript@6.0.2)
       agentkeepalive: 4.6.0
       bn.js: 5.2.3
       borsh: 0.7.0
@@ -1987,7 +1987,7 @@ snapshots:
       '@vue/compiler-core': 3.5.32
       '@vue/shared': 3.5.32
 
-  '@vue/language-core@1.8.27(typescript@5.9.3)':
+  '@vue/language-core@1.8.27(typescript@6.0.2)':
     dependencies:
       '@volar/language-core': 1.11.1
       '@volar/source-map': 1.11.1
@@ -1999,7 +1999,7 @@ snapshots:
       path-browserify: 1.0.1
       vue-template-compiler: 2.7.16
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 6.0.2
 
   '@vue/shared@3.5.32': {}
 
@@ -2592,7 +2592,7 @@ snapshots:
 
   typescript@5.4.2: {}
 
-  typescript@5.9.3: {}
+  typescript@6.0.2: {}
 
   undici-types@7.18.2: {}
 
@@ -2631,16 +2631,16 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-dts@3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@5.9.3)(vite@5.4.21(@types/node@25.5.2)):
+  vite-plugin-dts@3.9.1(@types/node@25.5.2)(rollup@4.60.1)(typescript@6.0.2)(vite@5.4.21(@types/node@25.5.2)):
     dependencies:
       '@microsoft/api-extractor': 7.43.0(@types/node@25.5.2)
       '@rollup/pluginutils': 5.3.0(rollup@4.60.1)
-      '@vue/language-core': 1.8.27(typescript@5.9.3)
+      '@vue/language-core': 1.8.27(typescript@6.0.2)
       debug: 4.4.3
       kolorist: 1.8.0
       magic-string: 0.30.21
-      typescript: 5.9.3
-      vue-tsc: 1.8.27(typescript@5.9.3)
+      typescript: 6.0.2
+      vue-tsc: 1.8.27(typescript@6.0.2)
     optionalDependencies:
       vite: 5.4.21(@types/node@25.5.2)
     transitivePeerDependencies:
@@ -2697,12 +2697,12 @@ snapshots:
       de-indent: 1.0.2
       he: 1.2.0
 
-  vue-tsc@1.8.27(typescript@5.9.3):
+  vue-tsc@1.8.27(typescript@6.0.2):
     dependencies:
       '@volar/typescript': 1.11.1
-      '@vue/language-core': 1.8.27(typescript@5.9.3)
+      '@vue/language-core': 1.8.27(typescript@6.0.2)
       semver: 7.7.4
-      typescript: 5.9.3
+      typescript: 6.0.2
 
   webidl-conversions@3.0.1: {}
 
