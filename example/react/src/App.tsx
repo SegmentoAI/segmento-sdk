@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { SegmentoClient } from "@segmento/core";
 import { SegmentoWaitlistModal } from "@segmento/react-waitlist-ui";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import heroImg from "./assets/hero.png";
 import "./App.css";
 
-// Initialize SegmentoClient
-SegmentoClient.init(
-  "eyJ2IjoxLCJwaWQiOiJteS1maXJzdC1wcm9qZWN0IiwibmFtZSI6Ik15IGZpcnN0IHByb2plY3QiLCJjaGsiOiJjMWU2ODFhMiJ9",
-);
+const TOKEN =
+  "eyJ2IjoxLCJwaWQiOiJteS1maXJzdC1wcm9qZWN0IiwibmFtZSI6Ik15IGZpcnN0IHByb2plY3QiLCJjaGsiOiJjMWU2ODFhMiJ9";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -31,6 +28,7 @@ function App() {
       </section>
 
       <SegmentoWaitlistModal
+        token={TOKEN}
         open={open}
         onClose={() => setOpen(false)}
         onSuccess={() => setTimeout(() => setOpen(false), 1500)}

@@ -14,7 +14,7 @@ export default defineConfig({
       fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
     },
     rollupOptions: {
-      external: ["react", "react/jsx-runtime", "@segmento/waitlist-ui"],
+      external: ["react", "react/jsx-runtime", "@segmento/core", "@segmento/waitlist-ui"],
     },
   },
 });

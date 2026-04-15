@@ -24,6 +24,8 @@ export interface RequiredFieldsConfig {
 }
 
 export interface SegmentoModalOptions extends RequiredFieldsConfig {
+  /** Segmento project token. Initialises SegmentoClient automatically. */
+  token?: string;
   /**
    * Initialised SegmentoClient instance. If omitted, falls back to the instance
    * stored by the last `SegmentoClient.init()` call (`window.__segmento`).
@@ -60,10 +62,13 @@ export class SegmentoModal extends HTMLElement {
   constructor(options: SegmentoModalOptions) {
     super();
     this.opts = { ..._defaultConfig, ...options };
+    if (this.opts.token) {
+      SegmentoClient.init(this.opts.token);
+    }
     const client = this.opts.client ?? SegmentoClient.getInstance();
     if (!client) {
       throw new Error(
-        "Segmento: no client provided. Call SegmentoClient.init(token) before creating a modal.",
+        "Segmento: no client provided. Pass a token or call SegmentoClient.init(token) before creating a modal.",
       );
     }
     this.client = client;

@@ -20,9 +20,6 @@ importers:
 
   example/react:
     dependencies:
-      '@segmento/core':
-        specifier: workspace:*
-        version: link:../../packages/core
       '@segmento/react-waitlist-ui':
         specifier: workspace:*
         version: link:../../packages/react-waitlist-ui
@@ -118,6 +115,9 @@ importers:
 
   packages/react-waitlist-ui:
     dependencies:
+      '@segmento/core':
+        specifier: workspace:*
+        version: link:../core
       '@segmento/waitlist-ui':
         specifier: workspace:*
         version: link:../waitlist-ui
