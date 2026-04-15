@@ -21,8 +21,8 @@ importers:
   example/react:
     dependencies:
       '@segmento/react-waitlist-ui':
-        specifier: workspace:*
-        version: link:../../packages/react-waitlist-ui
+        specifier: 0.3.0
+        version: 0.3.0(@solana/web3.js@1.98.4(bufferutil@4.1.0)(typescript@6.0.2)(utf-8-validate@6.0.6))(react@19.2.5)
       react:
         specifier: ^19.2.4
         version: 19.2.5
@@ -876,6 +876,25 @@ packages:
 
   '@rushstack/ts-command-line@4.19.1':
     resolution: {integrity: sha512-J7H768dgcpG60d7skZ5uSSwyCZs/S2HrWP1Ds8d1qYAyaaeJmpmmLr9BVw97RjFzmQPOYnoXcKA4GkqDCkduQg==}
+
+  '@segmento/core@0.5.0':
+    resolution: {integrity: sha512-bQb4zul7wSRL6Iq1AlDUYpDcR4cT7XSXkRtwLjlHRX5jAJ6PY/ip1n5/5UrPsVN7m5MDZ2Jn4dnUMGMMUC5T6g==}
+
+  '@segmento/lead@0.4.0':
+    resolution: {integrity: sha512-EtAm5M0snRvYdWE24pCZGvl0pO8qbdXxGX04PvtoMz7mATz/CdfDSmw86Qfh9O66E9MZY+7DRmcgRkfTa/0S0w==}
+
+  '@segmento/react-waitlist-ui@0.3.0':
+    resolution: {integrity: sha512-xIkFSFCBKopuuELDfHBuqw5MSDOqnQeTIdI75GYsW4kYycf/d/7BqfGai1WiaFDZMPzVE32cMUJf9AklHETnZw==}
+    peerDependencies:
+      react: '>=18'
+
+  '@segmento/solana@0.2.0':
+    resolution: {integrity: sha512-UaOG0cU6lTH5dwSwabTVaxJ0XReaD3IWbGkmiVwTdNPYAFO4OK/1wvuUBaiBXBiWM2VHae/Gz8eTnrEJWiS7Ig==}
+    peerDependencies:
+      '@solana/web3.js': ^1.x
+
+  '@segmento/waitlist-ui@0.7.0':
+    resolution: {integrity: sha512-R9FN3BjwKU+762x+K8p6KqaNm/E7qoWn8AwTIGUZ7ZpeXng7HMFGu36OWyrmlGIOU2xOBsHuCDzgycXWZk1z6w==}
 
   '@solana/buffer-layout@4.0.1':
     resolution: {integrity: sha512-E1ImOIAD1tBZFRdjeM4/pzTiTApC0AOBGwyAMS4fwIodCWArzJ3DWdoh8cKxeFM2fElkxBh2Aqts1BPC373rHA==}
@@ -3035,6 +3054,33 @@ snapshots:
       string-argv: 0.3.2
     transitivePeerDependencies:
       - '@types/node'
+
+  '@segmento/core@0.5.0': {}
+
+  '@segmento/lead@0.4.0':
+    dependencies:
+      '@segmento/core': 0.5.0
+
+  '@segmento/react-waitlist-ui@0.3.0(@solana/web3.js@1.98.4(bufferutil@4.1.0)(typescript@6.0.2)(utf-8-validate@6.0.6))(react@19.2.5)':
+    dependencies:
+      '@segmento/core': 0.5.0
+      '@segmento/waitlist-ui': 0.7.0(@solana/web3.js@1.98.4(bufferutil@4.1.0)(typescript@6.0.2)(utf-8-validate@6.0.6))
+      react: 19.2.5
+    transitivePeerDependencies:
+      - '@solana/web3.js'
+
+  '@segmento/solana@0.2.0(@solana/web3.js@1.98.4(bufferutil@4.1.0)(typescript@6.0.2)(utf-8-validate@6.0.6))':
+    dependencies:
+      '@segmento/core': 0.5.0
+      '@solana/web3.js': 1.98.4(bufferutil@4.1.0)(typescript@6.0.2)(utf-8-validate@6.0.6)
+
+  '@segmento/waitlist-ui@0.7.0(@solana/web3.js@1.98.4(bufferutil@4.1.0)(typescript@6.0.2)(utf-8-validate@6.0.6))':
+    dependencies:
+      '@segmento/core': 0.5.0
+      '@segmento/lead': 0.4.0
+      '@segmento/solana': 0.2.0(@solana/web3.js@1.98.4(bufferutil@4.1.0)(typescript@6.0.2)(utf-8-validate@6.0.6))
+    transitivePeerDependencies:
+      - '@solana/web3.js'
 
   '@solana/buffer-layout@4.0.1':
     dependencies:
