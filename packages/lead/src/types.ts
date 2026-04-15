@@ -1,20 +1,6 @@
-/** Data produced when a user signs the referral message with their Solana wallet */
-export interface SolanaWalletPayload {
-  /** Base58-encoded public key of the signing wallet */
-  address: string;
-  /** The plaintext message that was signed */
-  message: string;
-  /** Base58-encoded signature bytes */
-  signature: string;
-  /** Unix timestamp (ms) at the moment of signing */
-  ts: number;
-}
+import type { WalletProof } from "@segmento/core";
 
-/** Minimal interface representing a Solana wallet adapter */
-export interface WalletAdapter {
-  publicKey: { toBase58(): string } | null;
-  signMessage(message: Uint8Array): Promise<Uint8Array | { signature: Uint8Array }>;
-}
+export type { WalletProof };
 
 export interface SegmentoConfig {
   /** Token identifying your project, issued by Segmento */
@@ -25,7 +11,7 @@ export interface SegmentoConfig {
   telegramRequired: boolean;
   /** Whether an email address must be collected and submitted */
   emailRequired: boolean;
-  /** Whether a Solana wallet signature must be collected and submitted */
+  /** Whether a wallet proof must be provided */
   walletRequired: boolean;
   /** Override the Segmento API endpoint (defaults to the hosted API) */
   endpoint?: string;
@@ -36,15 +22,15 @@ export interface SegmentoConfig {
 export interface CreateReferralParams {
   telegram?: string;
   email?: string;
-  /** Required when walletRequired is true */
-  wallet?: WalletAdapter;
+  /** Required when walletRequired is true — obtain via e.g. @segmento/solana signMessage() */
+  wallet?: WalletProof;
 }
 
 export interface ReferralPayload {
   segmento_token: string;
   telegram?: string;
   email?: string;
-  wallet?: SolanaWalletPayload;
+  wallet?: WalletProof;
 }
 
 export interface ReferralResponse {

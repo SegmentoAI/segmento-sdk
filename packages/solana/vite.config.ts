@@ -12,7 +12,7 @@ export default defineConfig({
       fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
     },
     rollupOptions: {
-      external: ["@segmento/core"],
+      external: ["@solana/web3.js", "@segmento/core"],
     },
   },
 });

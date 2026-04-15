@@ -1,7 +1,7 @@
 {
-  "name": "@segmento/lead",
-  "version": "0.3.0",
-  "description": "Referral code generation for Segmento",
+  "name": "@segmento/solana",
+  "version": "0.1.0",
+  "description": "Solana wallet signing utilities for the Segmento SDK",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,8 +28,12 @@
   "dependencies": {
     "@segmento/core": "workspace:*"
   },
+  "peerDependencies": {
+    "@solana/web3.js": "^1.x"
+  },
   "devDependencies": {
     "vitest": "^2.0.0",
+    "@solana/web3.js": "^1.98.0",
     "typescript": "^5.4.0",
     "vite": "^5.2.0",
     "vite-plugin-dts": "^3.9.0"

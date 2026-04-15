@@ -1,4 +1,3 @@
-import { signMessage } from "./sign.js";
 import type {
   CreateReferralParams,
   ReferralPayload,
@@ -19,10 +18,12 @@ const DEFAULT_ENDPOINT = "https://api.segmento.io/v1/referral";
  *   walletRequired: true,
  * });
  *
+ * // Sign with e.g. @segmento/solana before calling createReferral:
+ * // const walletProof = await signMessage(adapter, projectName);
  * const { referral_code } = await segmento.createReferral({
  *   telegram: "@alice",
  *   email: "alice@example.com",
- *   wallet: solanaWalletAdapter,
+ *   wallet: walletProof,
  * });
  */
 export class Segmento {
@@ -40,9 +41,8 @@ export class Segmento {
   }
 
   /**
-   * Collects the required fields (as determined by the config), optionally
-   * signs a message with the user's Solana wallet, then submits everything to
-   * the Segmento backend and returns the referral code.
+   * Validates required fields and submits the lead to the Segmento backend.
+   * If walletRequired, a pre-signed {@link WalletProof} must be provided in params.
    */
   async createReferral(params: CreateReferralParams): Promise<ReferralResponse> {
     const { telegramRequired, emailRequired, walletRequired } = this.config;
@@ -56,9 +56,6 @@ export class Segmento {
     if (walletRequired && !params.wallet) {
       throw new Error("wallet is required");
     }
-    if (walletRequired && params.wallet && !params.wallet.publicKey) {
-      throw new Error("Wallet not connected");
-    }
 
     const payload: ReferralPayload = {
       segmento_token: this.config.segmentoToken,
@@ -71,7 +68,7 @@ export class Segmento {
       payload.email = params.email.trim();
     }
     if (walletRequired && params.wallet) {
-      payload.wallet = await signMessage(params.wallet, this.config.projectName);
+      payload.wallet = params.wallet;
     }
 
     const response = await this.fetchImpl(this.endpoint, {

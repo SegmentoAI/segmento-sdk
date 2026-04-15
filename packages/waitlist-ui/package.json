@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "@segmento/core": "workspace:*",
-    "@segmento/lead": "workspace:*"
+    "@segmento/lead": "workspace:*",
+    "@segmento/solana": "workspace:*"
   },
   "scripts": {
     "build": "tsc --noEmit && vite build",

@@ -1,4 +1,5 @@
-import type { SolanaWalletPayload, WalletAdapter } from "./types.js";
+import type { WalletProof } from "@segmento/core";
+import type { WalletAdapter } from "./types.js";
 
 const TC_URL =
   "https://github.com/SegmentoAI/terms-and-conditions/blob/v1.0/terms.md";
@@ -16,13 +17,12 @@ export function getSignMessage(projectName: string): string {
 
 /**
  * Builds the sign message for the given project, prompts the wallet to sign it,
- * and returns a {@link SolanaWalletPayload} with the address, message, signature,
- * and timestamp.
+ * and returns a {@link WalletProof} with the address, message, signature, and timestamp.
  */
 export async function signMessage(
   wallet: WalletAdapter,
   projectName: string,
-): Promise<SolanaWalletPayload> {
+): Promise<WalletProof> {
   if (!wallet.publicKey) {
     throw new Error("Wallet not connected");
   }
