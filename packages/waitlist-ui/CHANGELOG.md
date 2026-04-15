@@ -1,5 +1,11 @@
 # @segmento/waitlist-ui
 
+## 0.7.0
+
+### Minor Changes
+
+- e593479: ui packages contain core by default
+
 ## 0.6.0
 
 ### Minor Changes
