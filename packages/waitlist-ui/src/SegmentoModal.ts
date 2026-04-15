@@ -1,7 +1,8 @@
-import { signMessage, getSignMessage } from "@segmento/lead";
-import type { WalletAdapter } from "@segmento/lead";
+import { signMessage, getSignMessage } from "@segmento/solana";
+import type { WalletAdapter } from "@segmento/solana";
 import { SegmentoClient } from "@segmento/core";
 import { getReferralCode } from "@segmento/core";
+import type { WalletProof } from "@segmento/core";
 
 export interface RequiredFieldsConfig {
   /** Telegram field must be filled before submitting. Default: false */
@@ -54,7 +55,7 @@ export class SegmentoModal extends HTMLElement {
   private client: SegmentoClient;
   private wallet: WalletAdapter | null = null;
   private walletState: WalletState = "disconnected";
-  private signedPayload: Awaited<ReturnType<typeof signMessage>> | null = null;
+  private signedPayload: WalletProof | null = null;
 
   constructor(options: SegmentoModalOptions) {
     super();

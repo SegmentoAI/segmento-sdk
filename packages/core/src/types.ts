@@ -1,3 +1,15 @@
+/** Generic signed wallet proof — chain-agnostic shape passed through lead submissions */
+export interface WalletProof {
+  /** Wallet address (chain-specific encoding, e.g. base58 for Solana) */
+  address: string;
+  /** Plaintext message that was signed */
+  message: string;
+  /** Encoded signature bytes */
+  signature: string;
+  /** Unix timestamp (ms) at time of signing */
+  ts: number;
+}
+
 export interface SolanaWalletProof {
   wallet_address: string;
   message: string;
