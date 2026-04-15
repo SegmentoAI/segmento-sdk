@@ -9,7 +9,8 @@
     {
       "imports": {
         "@segmento/core": "https://esm.sh/@segmento/core",
-        "@segmento/lead": "https://esm.sh/@segmento/lead"
+        "@segmento/lead": "https://esm.sh/@segmento/lead",
+        "@segmento/solana": "https://esm.sh/@segmento/solana"
       }
     }
   </script>
@@ -141,7 +142,7 @@
 
   <script type="module">
     import { SegmentoClient, getReferralCode } from "@segmento/core";
-    import { signMessage } from "@segmento/lead";
+    import { signMessage } from "@segmento/solana";
 
     // Initialise with your project token (from the Segmento dashboard)
     const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoidGVzdCBwcm9qZWN0IiwiY2hrIjoiZmZjYjQzNDUifQ";
@@ -193,7 +194,7 @@
       btnSign.disabled = true;
 
       try {
-        // Sign the message — produces a SolanaWalletPayload
+        // Sign the message — produces a WalletProof
         const walletPayload = await signMessage(walletAdapter, client.projectName);
 
         // Submit the lead — project_id injected automatically, referral_code from ?ref=
