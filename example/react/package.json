@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@segmento/react-waitlist-ui": "0.3.1",
+    "@segmento/react-waitlist-ui": "0.3.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
