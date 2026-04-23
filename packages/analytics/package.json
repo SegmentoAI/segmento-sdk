@@ -19,7 +19,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && vite build --config vite.iife.config.mts",
     "dev": "tsc --watch",
     "lint": "tsc --noEmit",
     "clean": "rm -rf dist"
