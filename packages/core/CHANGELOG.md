@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.6.0
+
+### Minor Changes
+
+- 15df7df: add analytics
+
 ## 0.5.0
 
 ### Minor Changes
