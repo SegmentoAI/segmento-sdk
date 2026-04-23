@@ -1,5 +1,13 @@
 # @segmento/lead
 
+## 0.4.1
+
+### Patch Changes
+
+- 15df7df: add analytics
+- Updated dependencies [15df7df]
+  - @segmento/core@0.6.0
+
 ## 0.4.0
 
 ### Minor Changes
