@@ -1,9 +1,12 @@
+import { getReferralCode, getSessionCookie } from "@segmento/core";
 import type {
   CreateReferralParams,
   ReferralPayload,
   ReferralResponse,
   SegmentoConfig,
 } from "./types.js";
+
+const REF_COOKIE = "sgm_ref";
 
 const DEFAULT_ENDPOINT = "https://api.segmento.io/v1/referral";
 
@@ -69,6 +72,11 @@ export class Segmento {
     }
     if (walletRequired && params.wallet) {
       payload.wallet = params.wallet;
+    }
+
+    const ref = getReferralCode() ?? getSessionCookie(REF_COOKIE);
+    if (ref) {
+      payload.referral_code = ref;
     }
 
     const response = await this.fetchImpl(this.endpoint, {

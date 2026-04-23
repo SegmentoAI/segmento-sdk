@@ -9,7 +9,8 @@
     {
       "imports": {
         "@segmento/core": "https://esm.sh/@segmento/core",
-        "@segmento/waitlist-ui": "https://esm.sh/@segmento/waitlist-ui"
+        "@segmento/waitlist-ui": "https://esm.sh/@segmento/waitlist-ui",
+        "@segmento/analytics": "https://esm.sh/@segmento/analytics"
       }
     }
   </script>
@@ -70,6 +71,9 @@
   <script type="module">
     import { SegmentoClient } from "@segmento/core";
     import { defineSegmentoModal, SegmentoModal } from "@segmento/waitlist-ui";
+    import { segmentoAnalytics } from "@segmento/analytics";
+
+    segmentoAnalytics();
 
     // Initialise once — stored globally, picked up automatically by any modal
     SegmentoClient.init("eyJ2IjoxLCJwaWQiOiJteS1maXJzdC1wcm9qZWN0IiwibmFtZSI6Ik15IGZpcnN0IHByb2plY3QiLCJjaGsiOiJjMWU2ODFhMiJ9");

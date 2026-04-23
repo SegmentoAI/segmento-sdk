@@ -1,7 +1,7 @@
 {
-  "name": "@segmento/lead",
-  "version": "0.4.0",
-  "description": "Referral code generation for Segmento",
+  "name": "@segmento/analytics",
+  "version": "0.1.0",
+  "description": "Segmento analytics — referral impression tracking",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,18 +19,16 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && vite build --config vite.iife.config.mts",
     "dev": "tsc --watch",
     "lint": "tsc --noEmit",
-    "clean": "rm -rf dist",
-    "test": "vitest run"
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@segmento/core": "workspace:*"
   },
   "devDependencies": {
     "vitest": "^2.0.0",
-    "jsdom": "^26.0.0",
     "typescript": "^6.0.0",
     "vite": "^5.2.0",
     "vite-plugin-dts": "^3.9.0"
