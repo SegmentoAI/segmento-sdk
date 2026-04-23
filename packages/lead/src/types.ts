@@ -31,6 +31,7 @@ export interface ReferralPayload {
   telegram?: string;
   email?: string;
   wallet?: WalletProof;
+  referral_code?: string;
 }
 
 export interface ReferralResponse {
