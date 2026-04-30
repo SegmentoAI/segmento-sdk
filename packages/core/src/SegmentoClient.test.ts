@@ -17,7 +17,9 @@ describe("SegmentoClient.init", () => {
 
   it("stores instance on window.__segmento", () => {
     const client = SegmentoClient.init(token);
-    expect((window as unknown as Record<string, unknown>)["__segmento"]).toBe(client);
+    expect((window as unknown as Record<string, unknown>)["__segmento"]).toBe(
+      client,
+    );
   });
 
   it("throws on malformed token", () => {
@@ -56,6 +58,8 @@ describe("SegmentoClient.submitLead", () => {
       statusText: "Bad Request",
     });
     const client = SegmentoClient.init(token, { fetchImpl: mockFetch });
-    await expect(client.submitLead({})).rejects.toThrow("Segmento API error 400");
+    await expect(client.submitLead({})).rejects.toThrow(
+      "Segmento API error 400",
+    );
   });
 });

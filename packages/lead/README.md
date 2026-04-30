@@ -1,6 +1,6 @@
 # @segmento/lead
 
-Solana wallet signing for the [Segmento](https://segmento.tech) SDK. Prompts the user to sign a waitlist message and returns a verifiable payload.
+Referral lead submission for the [Segmento](https://segmento.tech) SDK. Validates required fields and submits the lead to the Segmento backend. Referral code is read automatically from the URL or session cookie.
 
 ## Installation
 
@@ -11,58 +11,64 @@ npm install @segmento/lead
 ## Usage
 
 ```ts
-import { signMessage, getSignMessage } from "@segmento/lead";
+import { Segmento } from "@segmento/lead";
 
-// Sign with the connected wallet
-const payload = await signMessage(wallet, "My Project");
+const segmento = new Segmento({
+  segmentoToken: "your_token",
+  projectName: "My Project",
+  telegramRequired: true,
+  emailRequired: true,
+  walletRequired: false,
+});
 
-console.log(payload.address);   // base58 wallet address
-console.log(payload.message);   // the message that was signed
-console.log(payload.signature); // base58-encoded signature
-console.log(payload.ts);        // Unix timestamp (ms)
+const { referral_code } = await segmento.createReferral({
+  telegram: "@alice",
+  email: "alice@example.com",
+});
 ```
 
-The signed message follows the format:
+`referral_code` in the response is the newly generated code for this user to share.
 
-```
-I am signing up to the {projectName} waitlist. By signing this message I confirm
-that I have read and agree to the Terms and Conditions: {tc_url}
-```
+The referral code from `?ref=` (or the `sgm_ref` session cookie set by `@segmento/core` or `@segmento/analytics`) is included in the submission automatically — no need to read it manually.
 
-## Wallet adapter
+### With wallet proof
 
-Pass any object that implements:
+Use `@segmento/solana` to produce a `WalletProof` before calling `createReferral`:
 
 ```ts
-interface WalletAdapter {
-  publicKey: { toBase58(): string } | null;
-  signMessage(message: Uint8Array): Promise<Uint8Array>;
-}
-```
+import { Segmento } from "@segmento/lead";
+import { signMessage } from "@segmento/solana";
 
-Compatible with `@solana/wallet-adapter-base` and the Phantom `window.solana` provider:
+const segmento = new Segmento({
+  segmentoToken: "your_token",
+  projectName: "My Project",
+  telegramRequired: false,
+  emailRequired: false,
+  walletRequired: true,
+});
 
-```ts
-const wallet = {
-  publicKey: { toBase58: () => phantomResp.publicKey.toBase58() },
-  signMessage: (bytes) => phantom.signMessage(bytes, "utf8").then(r => r.signature),
-};
+const walletProof = await signMessage(walletAdapter, "My Project");
+
+const { referral_code } = await segmento.createReferral({
+  wallet: walletProof,
+});
 ```
 
 ## API
 
 | Export | Description |
 |---|---|
-| `signMessage(wallet, projectName)` | Sign the waitlist message, returns `SolanaWalletPayload` |
-| `getSignMessage(projectName)` | Get the message string without signing |
+| `new Segmento(config)` | Create a lead client for a project |
+| `segmento.createReferral(params)` | Validate and submit the lead, returns `{ referral_code }` |
 
-## Types
+### Config
 
-```ts
-interface SolanaWalletPayload {
-  address:   string; // base58 wallet address
-  message:   string; // message that was signed
-  signature: string; // base58-encoded signature
-  ts:        number; // Unix timestamp in ms
-}
-```
+| Option | Type | Required | Description |
+|---|---|---|---|
+| `segmentoToken` | `string` | Yes | Project token from the Segmento dashboard |
+| `projectName` | `string` | Yes | Human-readable project name |
+| `telegramRequired` | `boolean` | Yes | Whether a Telegram username must be provided |
+| `emailRequired` | `boolean` | Yes | Whether an email must be provided |
+| `walletRequired` | `boolean` | Yes | Whether a wallet proof must be provided |
+| `endpoint` | `string` | No | Override the Segmento API endpoint |
+| `fetchImpl` | `typeof fetch` | No | Override the fetch implementation |
