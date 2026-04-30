@@ -26,6 +26,23 @@ export interface SubmitLeadRequest {
   solana_wallet?: SolanaWalletProof;
 }
 
+export interface TrackWalletConnectOptions {
+  projectId: string;
+  originUrl: string;
+  walletAddress?: string;
+  referralCode?: string;
+  meta?: Record<string, unknown>;
+}
+
+export interface TrackWalletTransactionOptions {
+  projectId: string;
+  originUrl: string;
+  walletAddress?: string;
+  referralCode?: string;
+  txSignature?: string;
+  meta?: Record<string, unknown>;
+}
+
 export interface ApiOptions {
   /** Base URL of the Segmento backend (defaults to the hosted API) */
   baseUrl?: string;

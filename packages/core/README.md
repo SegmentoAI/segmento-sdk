@@ -1,6 +1,6 @@
 # @segmento/core
 
-API client and utilities for the [Segmento](https://segmento.tech) SDK. Handles project token validation, lead submission, and referral code extraction.
+API client and utilities for the [Segmento](https://segmento.tech) SDK. Handles project token validation, impression tracking, lead submission, referral code extraction, and wallet event tracking.
 
 ## Installation
 
@@ -12,7 +12,7 @@ npm install @segmento/core
 
 ### Initialise the client
 
-Call once at page load. The instance is stored globally and picked up automatically by `@segmento/waitlist-ui`.
+Call once at page load. Automatically fires a referral impression, stores the `?ref=` code in a session cookie, and stores the instance globally for use anywhere in your app.
 
 ```ts
 import { SegmentoClient } from "@segmento/core";
@@ -20,10 +20,10 @@ import { SegmentoClient } from "@segmento/core";
 SegmentoClient.init("your_project_token");
 ```
 
-If you need a reference to the instance:
+### Access the instance anywhere
 
 ```ts
-const client = SegmentoClient.init("your_project_token");
+const client = SegmentoClient.getInstanceOrThrow();
 console.log(client.projectId);   // decoded from token
 console.log(client.projectName); // decoded from token
 ```
@@ -33,13 +33,34 @@ console.log(client.projectName); // decoded from token
 `project_id` is injected automatically from the token.
 
 ```ts
-const client = SegmentoClient.getInstance();
+const client = SegmentoClient.getInstanceOrThrow();
 
 await client.submitLead({
   email: "user@example.com",
   telegram: "@handle",
-  referral_code: getReferralCode() ?? "",
 });
+```
+
+### Track wallet events
+
+`project_id`, `origin_url`, and `referral_code` are injected automatically. Both calls are fire-and-forget.
+
+```ts
+import { trackWalletConnect, trackWalletTransaction } from "@segmento/core";
+
+// on wallet connect
+trackWalletConnect({ walletAddress: "abc123" });
+
+// on transaction
+trackWalletTransaction({ walletAddress: "abc123", txSignature: "sig456" });
+```
+
+Or via the client instance:
+
+```ts
+const client = SegmentoClient.getInstanceOrThrow();
+client.trackWalletConnect({ walletAddress: "abc123" });
+client.trackWalletTransaction({ walletAddress: "abc123", txSignature: "sig456" });
 ```
 
 ### Read referral code from the URL
@@ -49,7 +70,7 @@ Reads the `?ref=` query parameter by default.
 ```ts
 import { getReferralCode } from "@segmento/core";
 
-const code = getReferralCode();       // ?ref=
+const code = getReferralCode();         // ?ref=
 const code = getReferralCode("invite"); // ?invite=
 ```
 
@@ -67,11 +88,17 @@ const token = encodeToken("my-project-id", "My Project");
 
 | Export | Description |
 |---|---|
-| `SegmentoClient.init(token, options?)` | Decode token, create client, store globally |
-| `SegmentoClient.getInstance()` | Return the globally stored instance, or null |
+| `SegmentoClient.init(token, options?)` | Decode token, fire impression, store instance globally |
+| `SegmentoClient.getInstance()` | Return the globally stored instance, or `null` |
+| `SegmentoClient.getInstanceOrThrow()` | Return the globally stored instance, throws if not initialised |
 | `client.submitLead(request)` | POST lead to the Segmento API |
+| `client.trackWalletConnect(params?)` | Track wallet connect event |
+| `client.trackWalletTransaction(params?)` | Track wallet transaction event |
 | `client.projectId` | Decoded project ID |
 | `client.projectName` | Decoded project name |
+| `trackWalletConnect(params?)` | Standalone — reads instance from global |
+| `trackWalletTransaction(params?)` | Standalone — reads instance from global |
+| `sendImpression(options?)` | Fire referral impression manually |
 | `getReferralCode(param?)` | Read referral code from URL |
 | `encodeToken(pid, name)` | Generate a project token |
 | `decodeToken(token)` | Decode and validate a token |

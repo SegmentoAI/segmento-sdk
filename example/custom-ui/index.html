@@ -10,8 +10,7 @@
       "imports": {
         "@segmento/core": "https://esm.sh/@segmento/core",
         "@segmento/lead": "https://esm.sh/@segmento/lead",
-        "@segmento/solana": "https://esm.sh/@segmento/solana",
-        "@segmento/analytics": "https://esm.sh/@segmento/analytics"
+        "@segmento/solana": "https://esm.sh/@segmento/solana"
       }
     }
   </script>
@@ -144,11 +143,8 @@
   <script type="module">
     import { SegmentoClient, getReferralCode } from "@segmento/core";
     import { signMessage } from "@segmento/solana";
-    import { segmentoAnalytics } from "@segmento/analytics";
 
-    segmentoAnalytics();
-
-    // Initialise with your project token (from the Segmento dashboard)
+    // Initialise — fires impression automatically
     const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoidGVzdCBwcm9qZWN0IiwiY2hrIjoiZmZjYjQzNDUifQ";
     const client = SegmentoClient.init(TOKEN);
 
