@@ -1,5 +1,16 @@
 # @segmento/analytics
 
+## 0.3.0
+
+### Minor Changes
+
+- 402d1e4: wallet tracking
+
+### Patch Changes
+
+- Updated dependencies [402d1e4]
+  - @segmento/core@0.7.0
+
 ## 0.2.2
 
 ### Patch Changes

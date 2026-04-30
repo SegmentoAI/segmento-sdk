@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.7.0
+
+### Minor Changes
+
+- 402d1e4: wallet tracking
+
 ## 0.6.0
 
 ### Minor Changes

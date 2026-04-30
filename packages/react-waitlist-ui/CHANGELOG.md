@@ -1,5 +1,13 @@
 # @segmento/react-waitlist-ui
 
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [402d1e4]
+  - @segmento/core@0.7.0
+  - @segmento/waitlist-ui@0.7.2
+
 ## 0.3.1
 
 ### Patch Changes
