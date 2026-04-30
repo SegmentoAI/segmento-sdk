@@ -1,6 +1,6 @@
 # Segmento SDK — Examples
 
-Two standalone HTML pages that demonstrate the SDK packages running directly in the browser.
+Standalone HTML pages that demonstrate the SDK packages running directly in the browser.
 Both pages import from the built `dist/` files of each package — run `pnpm build` from the
 repo root before opening them.
 
@@ -17,6 +17,7 @@ Then open:
 
 - `http://localhost:3333/example/ui-package/index.html` — `@segmento/waitlist-ui` modal demo
 - `http://localhost:3333/example/custom-ui/index.html` — custom UI with `@segmento/lead` + `@segmento/solana`
+- `http://localhost:3333/example/mock-wallet-events/index.html` — mock wallet connect and transaction events
 
 ---
 
@@ -60,6 +61,31 @@ Lower-level packages for building your own UI. Signing is handled explicitly via
 - The full `WalletProof` — address, message, base58 signature, timestamp
 
 **Relevant packages:** `@segmento/core`, `@segmento/lead`, `@segmento/solana`
+
+---
+
+## mock-wallet-events — Mock Wallet Tracking
+
+Simple staging example that does not require a real wallet. It initializes `SegmentoClient`
+with:
+
+```ts
+SegmentoClient.init(token, {
+  baseUrl: "https://staging-referral.segmento.tech/manager-api",
+});
+```
+
+**Flow:**
+
+1. **Mock Connect Wallet** — sends a `wallet-connect` event with a mock wallet address
+2. **Mock Send Transaction** — sends a `wallet-transaction` event with a mock transaction signature
+
+**What it shows:**
+- `SegmentoClient.init(token, { baseUrl })` targeting the staging referral API
+- `client.trackWalletConnect(...)` with mock metadata
+- `client.trackWalletTransaction(...)` with mock metadata and `txSignature`
+
+**Relevant package:** `@segmento/core`
 
 ---
 

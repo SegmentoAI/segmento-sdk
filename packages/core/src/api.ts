@@ -2,11 +2,15 @@ import type { ApiOptions, SubmitLeadRequest, TrackWalletConnectOptions, TrackWal
 
 const DEFAULT_BASE_URL = "https://referral.segmento.tech/manager-api";
 
+function getBaseUrl(options: ApiOptions): string {
+  return (options.baseUrl ?? DEFAULT_BASE_URL).replace(/\/+$/, "");
+}
+
 export async function submitLead(
   request: SubmitLeadRequest,
   options: ApiOptions = {},
 ): Promise<void> {
-  const baseUrl = options.baseUrl ?? DEFAULT_BASE_URL;
+  const baseUrl = getBaseUrl(options);
   const fetchImpl = options.fetchImpl ?? fetch;
 
   const response = await fetchImpl(`${baseUrl}/lead`, {
@@ -25,7 +29,7 @@ export async function redeemReferral(
   url: string,
   options: ApiOptions = {},
 ): Promise<void> {
-  const baseUrl = options.baseUrl ?? DEFAULT_BASE_URL;
+  const baseUrl = getBaseUrl(options);
   const fetchImpl = options.fetchImpl ?? fetch;
 
   const response = await fetchImpl(`${baseUrl}/redeem`, {
@@ -44,7 +48,7 @@ export function trackWalletConnect(
   options: TrackWalletConnectOptions,
   apiOptions: ApiOptions = {},
 ): void {
-  const baseUrl = apiOptions.baseUrl ?? DEFAULT_BASE_URL;
+  const baseUrl = getBaseUrl(apiOptions);
   const fetchImpl = apiOptions.fetchImpl ?? fetch;
 
   fetchImpl(`${baseUrl}/wallet-connect`, {
@@ -64,7 +68,7 @@ export function trackWalletTransaction(
   options: TrackWalletTransactionOptions,
   apiOptions: ApiOptions = {},
 ): void {
-  const baseUrl = apiOptions.baseUrl ?? DEFAULT_BASE_URL;
+  const baseUrl = getBaseUrl(apiOptions);
   const fetchImpl = apiOptions.fetchImpl ?? fetch;
 
   const { txSignature, meta, ...rest } = options;

@@ -1,5 +1,9 @@
 import { describe, it, expect, vi } from "vitest";
-import { submitLead } from "./api.js";
+import {
+  submitLead,
+  trackWalletConnect,
+  trackWalletTransaction,
+} from "./api.js";
 
 describe("submitLead", () => {
   it("POSTs to correct URL with serialized body", async () => {
@@ -28,6 +32,17 @@ describe("submitLead", () => {
     expect(url).toMatch(/\/lead$/);
   });
 
+  it("normalizes trailing slashes in custom base URL", async () => {
+    const mockFetch = vi.fn().mockResolvedValue({ ok: true });
+
+    await submitLead(
+      { project_id: "proj-1" },
+      { baseUrl: "https://test.api/", fetchImpl: mockFetch },
+    );
+
+    expect(mockFetch.mock.calls[0][0]).toBe("https://test.api/lead");
+  });
+
   it("throws with status and body on non-ok response", async () => {
     const mockFetch = vi.fn().mockResolvedValue({
       ok: false,
@@ -52,5 +67,71 @@ describe("submitLead", () => {
     await expect(
       submitLead({ project_id: "x" }, { fetchImpl: mockFetch }),
     ).rejects.toThrow("Segmento API error 500: Internal Server Error");
+  });
+});
+
+describe("wallet tracking", () => {
+  it("POSTs wallet connect event to normalized base URL", () => {
+    const mockFetch = vi.fn().mockResolvedValue({ ok: true });
+
+    trackWalletConnect(
+      {
+        projectId: "proj-1",
+        originUrl: "https://app.test",
+        walletAddress: "wallet-1",
+        referralCode: "ref-1",
+        meta: { source: "test" },
+      },
+      { baseUrl: "https://test.api/", fetchImpl: mockFetch },
+    );
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      "https://test.api/wallet-connect",
+      expect.objectContaining({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          project_id: "proj-1",
+          origin_url: "https://app.test",
+          wallet_address: "wallet-1",
+          referral_code: "ref-1",
+          meta: { source: "test" },
+        }),
+      }),
+    );
+  });
+
+  it("POSTs wallet transaction event with tx signature in meta", () => {
+    const mockFetch = vi.fn().mockResolvedValue({ ok: true });
+
+    trackWalletTransaction(
+      {
+        projectId: "proj-1",
+        originUrl: "https://app.test",
+        walletAddress: "wallet-1",
+        referralCode: "ref-1",
+        txSignature: "tx-1",
+        meta: { source: "test" },
+      },
+      { baseUrl: "https://test.api/", fetchImpl: mockFetch },
+    );
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      "https://test.api/wallet-transaction",
+      expect.objectContaining({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          project_id: "proj-1",
+          origin_url: "https://app.test",
+          wallet_address: "wallet-1",
+          referral_code: "ref-1",
+          meta: {
+            tx_signature: "tx-1",
+            source: "test",
+          },
+        }),
+      }),
+    );
   });
 });

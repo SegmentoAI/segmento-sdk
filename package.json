@@ -11,7 +11,8 @@
     "release": "pnpm build && pnpm changeset publish",
     "example": "npx serve . --listen 3333 --no-clipboard",
     "example:ui": "npx serve . --listen 3333 --no-clipboard --open example/ui-package/index.html",
-    "example:custom": "npx serve . --listen 3333 --no-clipboard --open example/custom-ui/index.html"
+    "example:custom": "npx serve . --listen 3333 --no-clipboard --open example/custom-ui/index.html",
+    "example:mock-wallet": "npx serve . --listen 3333 --no-clipboard --open example/mock-wallet-events/index.html"
   },
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
