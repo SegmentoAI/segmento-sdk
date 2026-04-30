@@ -1,5 +1,16 @@
 # @segmento/lead
 
+## 0.5.0
+
+### Minor Changes
+
+- 402d1e4: wallet tracking
+
+### Patch Changes
+
+- Updated dependencies [402d1e4]
+  - @segmento/core@0.7.0
+
 ## 0.4.1
 
 ### Patch Changes
