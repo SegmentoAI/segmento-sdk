@@ -19,7 +19,9 @@ export function sendImpression(options: ApiOptions = {}): void {
   }
 
   setSessionCookie(IMPRESSION_COOKIE, "1");
-  redeemReferral(window.location.href, options);
+  if (window.location?.href) {
+    redeemReferral(window.location.href, options);
+  }
 }
 
 type WalletConnectParams = {

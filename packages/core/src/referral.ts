@@ -13,5 +13,5 @@ export const REFERRAL_PARAM = "ref";
  */
 export function getReferralCode(param = REFERRAL_PARAM): string | null {
   if (typeof window === "undefined") return null;
-  return new URLSearchParams(window.location.search).get(param);
+  return new URLSearchParams(window.location?.search ?? "").get(param);
 }
