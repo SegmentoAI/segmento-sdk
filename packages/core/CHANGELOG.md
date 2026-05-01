@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.8.0
+
+### Minor Changes
+
+- 4a74f9a: add captureLead
+
 ## 0.7.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @segmento/solana
 
+## 0.2.3
+
+### Patch Changes
+
+- Updated dependencies [4a74f9a]
+  - @segmento/core@0.8.0
+
 ## 0.2.2
 
 ### Patch Changes
