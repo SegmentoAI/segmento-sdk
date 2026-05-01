@@ -135,64 +135,38 @@
       <button id="transaction-btn" class="secondary" type="button">Mock Send Transaction</button>
     </div>
 
-    <dl>
-      <dt>Base URL</dt>
-      <dd id="base-url"></dd>
-      <dt>Project</dt>
-      <dd id="project"></dd>
-      <dt>Wallet</dt>
-      <dd id="wallet"></dd>
-    </dl>
-
     <pre id="log">Ready.</pre>
   </main>
 
   <script type="module">
-    import { SegmentoClient, getReferralCode } from "../../packages/core/dist/index.js";
+    import { SegmentoClient, trackWalletConnect, trackWalletTransaction } from "../../packages/core/dist/index.js";
 
     const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoiVGVzdCBQcm9qZWN0IiwiY2hrIjoiYzQwOTZhNDUifQ";
-    // example sends events to staging, not necessary to set in production
-    const BASE_URL = "https://staging-referral.segmento.tech/manager-api";
     const MOCK_WALLET_ADDRESS = "MockWallet111111111111111111111111111111111";
 
-    const client = SegmentoClient.init(TOKEN, { baseUrl: BASE_URL });
-    const referralCode = getReferralCode() ?? undefined;
+    SegmentoClient.init(TOKEN,
+      // example sends events to staging - do not set this in production
+      { baseUrl: "https://staging-referral.segmento.tech/manager-api" }
+    );
 
     const logEl = document.getElementById("log");
-    document.getElementById("base-url").textContent = BASE_URL;
-    document.getElementById("project").textContent = `${client.projectName} (${client.projectId})`;
-    document.getElementById("wallet").textContent = MOCK_WALLET_ADDRESS;
-
     function writeLog(label, payload) {
       logEl.textContent = `${label}\n${JSON.stringify(payload, null, 2)}`;
     }
 
     document.getElementById("connect-btn").addEventListener("click", () => {
-      const payload = {
+      trackWalletConnect({
         walletAddress: MOCK_WALLET_ADDRESS,
-        referralCode,
-        meta: {
-          source: "mock-wallet-events-example",
-          wallet_provider: "mock",
-          connected_at: new Date().toISOString(),
-        },
-      };
-
-      client.trackWalletConnect(payload);
-      writeLog("Sent wallet-connect event", payload);
+      });
+      writeLog("Sent wallet-connect event", { walletAddress: MOCK_WALLET_ADDRESS });
     });
 
     document.getElementById("transaction-btn").addEventListener("click", () => {
-      const payload = {
+      trackWalletTransaction({
         walletAddress: MOCK_WALLET_ADDRESS,
-        referralCode,
-        meta: {
-          tx: "0x12345"
-        },
-      };
-
-      client.trackWalletTransaction(payload);
-      writeLog("Sent wallet-transaction event", payload);
+        tx: "0x12345",
+      });
+      writeLog("Sent wallet-transaction event", { walletAddress: MOCK_WALLET_ADDRESS, tx: "0x12345" });
     });
   </script>
 </body>

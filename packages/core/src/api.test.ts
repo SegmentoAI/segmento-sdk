@@ -110,7 +110,7 @@ describe("wallet tracking", () => {
         originUrl: "https://app.test",
         walletAddress: "wallet-1",
         referralCode: "ref-1",
-        txSignature: "tx-1",
+        tx: "tx-1",
         meta: { source: "test" },
       },
       { baseUrl: "https://test.api/", fetchImpl: mockFetch },
@@ -127,7 +127,7 @@ describe("wallet tracking", () => {
           wallet_address: "wallet-1",
           referral_code: "ref-1",
           meta: {
-            tx_signature: "tx-1",
+            tx: "tx-1",
             source: "test",
           },
         }),

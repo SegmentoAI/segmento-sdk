@@ -36,7 +36,7 @@ type WalletConnectParams = {
 
 type WalletTransactionParams = {
   walletAddress?: string;
-  txSignature?: string;
+  tx?: string;
   meta?: Record<string, unknown>;
 };
 
@@ -55,17 +55,12 @@ export class SegmentoClient {
   /** Decoded project name from the token */
   readonly projectName: string;
 
-  private readonly token: string;
   private readonly apiOptions: ApiOptions;
-  private readonly decoded: TokenPayload;
 
   private constructor(
-    token: string,
     decoded: TokenPayload,
     apiOptions: ApiOptions,
   ) {
-    this.token = token;
-    this.decoded = decoded;
     this.projectId = decoded.pid;
     this.projectName = decoded.name;
     this.apiOptions = apiOptions;
@@ -80,7 +75,7 @@ export class SegmentoClient {
    */
   static init(token: string, options: ApiOptions = {}): SegmentoClient {
     const decoded = decodeToken(token);
-    const instance = new SegmentoClient(token, decoded, options);
+    const instance = new SegmentoClient(decoded, options);
     (window as unknown as { __segmento: SegmentoClient }).__segmento = instance;
     sendImpression(options);
     return instance;

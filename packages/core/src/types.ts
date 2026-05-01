@@ -39,7 +39,7 @@ export interface TrackWalletTransactionOptions {
   originUrl: string;
   walletAddress?: string;
   referralCode?: string;
-  txSignature?: string;
+  tx?: string;
   meta?: Record<string, unknown>;
 }
 

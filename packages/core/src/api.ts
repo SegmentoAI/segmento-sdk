@@ -96,8 +96,8 @@ export function trackWalletTransaction(
   const baseUrl = getBaseUrl(apiOptions);
   const fetchImpl = apiOptions.fetchImpl ?? fetch;
 
-  const { txSignature, meta, ...rest } = options;
-  const combinedMeta = txSignature ? { tx_signature: txSignature, ...meta } : meta;
+  const { tx, meta, ...rest } = options;
+  const combinedMeta = tx ? { tx, ...meta } : meta;
 
   fetchImpl(`${baseUrl}/wallet-transaction`, {
     method: "POST",
