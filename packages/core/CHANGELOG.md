@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.8.1
+
+### Patch Changes
+
+- bc234b9: wallet events refactor
+
 ## 0.8.0
 
 ### Minor Changes

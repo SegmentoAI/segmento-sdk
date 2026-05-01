@@ -1,5 +1,13 @@
 # @segmento/analytics
 
+## 0.3.2
+
+### Patch Changes
+
+- bc234b9: wallet events refactor
+- Updated dependencies [bc234b9]
+  - @segmento/core@0.8.1
+
 ## 0.3.1
 
 ### Patch Changes
