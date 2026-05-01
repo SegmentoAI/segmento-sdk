@@ -5,6 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Segmento Mock Wallet Events</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "@segmento/core": "https://esm.sh/@segmento/core@0.8.1"
+      }
+    }
+  </script>
   <style>
     *,
     *::before,
@@ -139,7 +146,7 @@
   </main>
 
   <script type="module">
-    import { SegmentoClient, trackWalletConnect, trackWalletTransaction } from "../../packages/core/dist/index.js";
+    import { SegmentoClient, trackWalletConnect, trackWalletTransaction } from "@segmento/core";
 
     const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoiVGVzdCBQcm9qZWN0IiwiY2hrIjoiYzQwOTZhNDUifQ";
     const MOCK_WALLET_ADDRESS = "MockWallet111111111111111111111111111111111";
