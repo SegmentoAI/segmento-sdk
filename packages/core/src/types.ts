@@ -43,6 +43,14 @@ export interface TrackWalletTransactionOptions {
   meta?: Record<string, unknown>;
 }
 
+export interface CaptureLeadOptions {
+  projectId: string;
+  referralCode?: string;
+  email?: string;
+  telegram?: string;
+  originUrl?: string;
+}
+
 export interface ApiOptions {
   /** Base URL of the Segmento backend (defaults to the hosted API) */
   baseUrl?: string;

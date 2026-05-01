@@ -41,6 +41,16 @@ await client.submitLead({
 });
 ```
 
+### Capture a lead
+
+`project_id`, `origin_url`, and `referral_code` are injected automatically.
+
+```ts
+import { captureLead } from "@segmento/core";
+
+await captureLead({ email: "alice@example.com", telegram: "@alice" });
+```
+
 ### Track wallet events
 
 `project_id`, `origin_url`, and `referral_code` are injected automatically. Both calls are fire-and-forget.
@@ -92,10 +102,12 @@ const token = encodeToken("my-project-id", "My Project");
 | `SegmentoClient.getInstance()` | Return the globally stored instance, or `null` |
 | `SegmentoClient.getInstanceOrThrow()` | Return the globally stored instance, throws if not initialised |
 | `client.submitLead(request)` | POST lead to the Segmento API |
+| `client.captureLead(params?)` | Capture lead |
 | `client.trackWalletConnect(params?)` | Track wallet connect event |
 | `client.trackWalletTransaction(params?)` | Track wallet transaction event |
 | `client.projectId` | Decoded project ID |
 | `client.projectName` | Decoded project name |
+| `captureLead(params?)` | Standalone — capture lead, reads instance from global |
 | `trackWalletConnect(params?)` | Standalone — reads instance from global |
 | `trackWalletTransaction(params?)` | Standalone — reads instance from global |
 | `sendImpression(options?)` | Fire referral impression manually |

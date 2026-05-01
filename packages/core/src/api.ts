@@ -1,4 +1,4 @@
-import type { ApiOptions, SubmitLeadRequest, TrackWalletConnectOptions, TrackWalletTransactionOptions } from "./types.js";
+import type { ApiOptions, CaptureLeadOptions, SubmitLeadRequest, TrackWalletConnectOptions, TrackWalletTransactionOptions } from "./types.js";
 
 const DEFAULT_BASE_URL = "https://referral.segmento.tech/manager-api";
 
@@ -36,6 +36,31 @@ export async function redeemReferral(
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => response.statusText);
+    throw new Error(`Segmento API error ${response.status}: ${text}`);
+  }
+}
+
+export async function captureLead(
+  options: CaptureLeadOptions,
+  apiOptions: ApiOptions = {},
+): Promise<void> {
+  const baseUrl = getBaseUrl(apiOptions);
+  const fetchImpl = apiOptions.fetchImpl ?? fetch;
+
+  const response = await fetchImpl(`${baseUrl}/capture-lead`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      project_id: options.projectId,
+      referral_code: options.referralCode,
+      email: options.email,
+      telegram: options.telegram,
+      origin_url: options.originUrl,
+    }),
   });
 
   if (!response.ok) {
