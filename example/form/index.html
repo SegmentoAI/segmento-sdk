@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Segmento Form — Demo</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "@segmento/core": "https://esm.sh/@segmento/core@0.8.0"
+      }
+    }
+  </script>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 48px 16px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 12px;
+      padding: 32px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0 0 4px;
+    }
+
+    .subtitle {
+      color: #777;
+      font-size: 14px;
+      margin: 0 0 28px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    label {
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    input {
+      background: #111;
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+      color: #e8e8e8;
+      font-size: 14px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input:focus {
+      border-color: #7c3aed;
+    }
+
+    button {
+      width: 100%;
+      padding: 11px;
+      margin-top: 8px;
+      background: #7c3aed;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+    }
+
+    button:hover:not(:disabled) {
+      background: #6d28d9;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .status {
+      font-size: 13px;
+      color: #888;
+      margin-top: 12px;
+      min-height: 18px;
+    }
+
+    .status.ok {
+      color: #4ade80;
+    }
+
+    .status.err {
+      color: #f87171;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Join the Waitlist</h1>
+    <p class="subtitle">Enter your details to get early access.</p>
+
+    <form id="form">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label for="telegram">Telegram</label>
+        <input id="telegram" type="text" placeholder="@handle" />
+      </div>
+      <button type="submit" id="btn">Submit</button>
+    </form>
+    <div class="status" id="status"></div>
+  </div>
+
+  <script type="module">
+    import { SegmentoClient, captureLead } from "@segmento/core";
+
+    SegmentoClient.init(
+      "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoidGVzdCBwcm9qZWN0IiwiY2hrIjoiZmZjYjQzNDUifQ",
+      // example sends requests to staging - do not use this in production
+      { baseUrl: "https://staging-referral.segmento.tech/manager-api" },
+    );
+
+    document.getElementById("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const telegram = document.getElementById("telegram").value.trim();
+      const btn = document.getElementById("btn");
+      const statusEl = document.getElementById("status");
+
+      btn.disabled = true;
+      statusEl.textContent = "";
+      statusEl.className = "status";
+
+      try {
+        await captureLead({ email: email || undefined, telegram: telegram || undefined });
+        statusEl.textContent = "You're on the list!";
+        statusEl.className = "status ok";
+      } catch (err) {
+        statusEl.textContent = `Error: ${err.message}`;
+        statusEl.className = "status err";
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+
+</html>
