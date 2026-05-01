@@ -1,6 +1,6 @@
 {
   "name": "@segmento/lead",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Referral code generation for Segmento",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
