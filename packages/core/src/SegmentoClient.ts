@@ -1,6 +1,6 @@
 import { decodeToken } from "./token.js";
 import type { TokenPayload } from "./token.js";
-import { submitLead, trackWalletConnect as trackWalletConnectRaw, trackWalletTransaction as trackWalletTransactionRaw, redeemReferral } from "./api.js";
+import { submitLead, captureLead as captureLeadRaw, trackWalletConnect as trackWalletConnectRaw, trackWalletTransaction as trackWalletTransactionRaw, redeemReferral } from "./api.js";
 import { getReferralCode } from "./referral.js";
 import { getSessionCookie, setSessionCookie } from "./cookies.js";
 import type { ApiOptions, SubmitLeadRequest } from "./types.js";
@@ -23,6 +23,11 @@ export function sendImpression(options: ApiOptions = {}): void {
     redeemReferral(window.location.href, options);
   }
 }
+
+type CaptureLeadParams = {
+  email?: string;
+  telegram?: string;
+};
 
 type WalletConnectParams = {
   walletAddress?: string;
@@ -110,6 +115,19 @@ export class SegmentoClient {
     );
   }
 
+  /** Captures a lead. `project_id`, `origin_url`, and `referral_code` are injected automatically. */
+  captureLead(params: CaptureLeadParams = {}): Promise<void> {
+    return captureLeadRaw(
+      {
+        projectId: this.projectId,
+        originUrl: window.location.href,
+        referralCode: getReferralCode() ?? getSessionCookie(REF_COOKIE) ?? undefined,
+        ...params,
+      },
+      this.apiOptions,
+    );
+  }
+
   /** Tracks a wallet connect event. `project_id`, `origin_url`, and `referral_code` are injected automatically. */
   trackWalletConnect(params: WalletConnectParams = {}): void {
     trackWalletConnectRaw(
@@ -135,6 +153,10 @@ export class SegmentoClient {
       this.apiOptions,
     );
   }
+}
+
+export function captureLead(params: CaptureLeadParams = {}): Promise<void> {
+  return SegmentoClient.getInstanceOrThrow().captureLead(params);
 }
 
 export function trackWalletConnect(params: WalletConnectParams = {}): void {
