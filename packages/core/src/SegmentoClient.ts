@@ -27,6 +27,7 @@ export function sendImpression(options: ApiOptions = {}): void {
 type CaptureLeadParams = {
   email?: string;
   telegram?: string;
+  meta?: Record<string, unknown>;
 };
 
 type WalletConnectParams = {

@@ -1,4 +1,10 @@
-import type { ApiOptions, CaptureLeadOptions, SubmitLeadRequest, TrackWalletConnectOptions, TrackWalletTransactionOptions } from "./types.js";
+import type {
+  ApiOptions,
+  CaptureLeadOptions,
+  SubmitLeadRequest,
+  TrackWalletConnectOptions,
+  TrackWalletTransactionOptions,
+} from "./types.js";
 
 const DEFAULT_BASE_URL = "https://referral.segmento.tech/manager-api";
 
@@ -60,6 +66,7 @@ export async function captureLead(
       email: options.email,
       telegram: options.telegram,
       origin_url: options.originUrl,
+      meta: options.meta,
     }),
   });
 

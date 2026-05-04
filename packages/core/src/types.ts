@@ -49,6 +49,7 @@ export interface CaptureLeadOptions {
   email?: string;
   telegram?: string;
   originUrl?: string;
+  meta?: Record<string, unknown>;
 }
 
 export interface ApiOptions {
