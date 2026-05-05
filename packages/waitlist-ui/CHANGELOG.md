@@ -1,5 +1,14 @@
 # @segmento/waitlist-ui
 
+## 0.7.5
+
+### Patch Changes
+
+- Updated dependencies [ac5c83a]
+  - @segmento/core@0.9.0
+  - @segmento/lead@0.5.3
+  - @segmento/solana@0.2.5
+
 ## 0.7.4
 
 ### Patch Changes

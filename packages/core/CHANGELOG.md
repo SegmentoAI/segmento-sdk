@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.9.0
+
+### Minor Changes
+
+- ac5c83a: allow meta in capture lead
+
 ## 0.8.1
 
 ### Patch Changes
