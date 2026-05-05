@@ -1,5 +1,12 @@
 # @segmento/analytics
 
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies [3072406]
+  - @segmento/core@0.9.1
+
 ## 0.3.3
 
 ### Patch Changes
