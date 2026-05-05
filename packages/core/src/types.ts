@@ -1,3 +1,5 @@
+export type MetaValue = string | number | boolean;
+
 /** Generic signed wallet proof — chain-agnostic shape passed through lead submissions */
 export interface WalletProof {
   /** Wallet address (chain-specific encoding, e.g. base58 for Solana) */
@@ -31,7 +33,7 @@ export interface TrackWalletConnectOptions {
   originUrl: string;
   walletAddress?: string;
   referralCode?: string;
-  meta?: Record<string, unknown>;
+  meta?: Record<string, MetaValue>;
 }
 
 export interface TrackWalletTransactionOptions {
@@ -40,7 +42,7 @@ export interface TrackWalletTransactionOptions {
   walletAddress?: string;
   referralCode?: string;
   tx?: string;
-  meta?: Record<string, unknown>;
+  meta?: Record<string, MetaValue>;
 }
 
 export interface CaptureLeadOptions {
@@ -49,7 +51,7 @@ export interface CaptureLeadOptions {
   email?: string;
   telegram?: string;
   originUrl?: string;
-  meta?: Record<string, unknown>;
+  meta?: Record<string, MetaValue>;
 }
 
 export interface ApiOptions {

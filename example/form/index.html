@@ -8,7 +8,7 @@
   <script type="importmap">
     {
       "imports": {
-        "@segmento/core": "https://esm.sh/@segmento/core@0.8.0"
+        "@segmento/core": "https://esm.sh/@segmento/core@0.8.1"
       }
     }
   </script>
@@ -132,6 +132,14 @@
         <label for="telegram">Telegram</label>
         <input id="telegram" type="text" placeholder="@handle" />
       </div>
+      <div class="field">
+        <label for="company">Company Name</label>
+        <input id="company" type="text" placeholder="Acme Inc." />
+      </div>
+      <div class="field">
+        <label for="description">Project Description</label>
+        <input id="description" type="text" placeholder="What are you building?" />
+      </div>
       <button type="submit" id="btn">Submit</button>
     </form>
     <div class="status" id="status"></div>
@@ -151,6 +159,8 @@
 
       const email = document.getElementById("email").value.trim();
       const telegram = document.getElementById("telegram").value.trim();
+      const company = document.getElementById("company").value.trim();
+      const description = document.getElementById("description").value.trim();
       const btn = document.getElementById("btn");
       const statusEl = document.getElementById("status");
 
@@ -159,7 +169,14 @@
       statusEl.className = "status";
 
       try {
-        await captureLead({ email: email || undefined, telegram: telegram || undefined });
+        await captureLead({
+          email: email || undefined,
+          telegram: telegram || undefined,
+          meta: {
+            company_name: company || undefined,
+            project_description: description || undefined,
+          },
+        });
         statusEl.textContent = "You're on the list!";
         statusEl.className = "status ok";
       } catch (err) {

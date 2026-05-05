@@ -1,9 +1,15 @@
 import { decodeToken } from "./token.js";
 import type { TokenPayload } from "./token.js";
-import { submitLead, captureLead as captureLeadRaw, trackWalletConnect as trackWalletConnectRaw, trackWalletTransaction as trackWalletTransactionRaw, redeemReferral } from "./api.js";
+import {
+  submitLead,
+  captureLead as captureLeadRaw,
+  trackWalletConnect as trackWalletConnectRaw,
+  trackWalletTransaction as trackWalletTransactionRaw,
+  redeemReferral,
+} from "./api.js";
 import { getReferralCode } from "./referral.js";
 import { getSessionCookie, setSessionCookie } from "./cookies.js";
-import type { ApiOptions, SubmitLeadRequest } from "./types.js";
+import type { ApiOptions, MetaValue, SubmitLeadRequest } from "./types.js";
 
 const REF_COOKIE = "sgm_ref";
 const IMPRESSION_COOKIE = "sgm_impression_sent";
@@ -27,18 +33,18 @@ export function sendImpression(options: ApiOptions = {}): void {
 type CaptureLeadParams = {
   email?: string;
   telegram?: string;
-  meta?: Record<string, unknown>;
+  meta?: Record<string, MetaValue>;
 };
 
 type WalletConnectParams = {
   walletAddress?: string;
-  meta?: Record<string, unknown>;
+  meta?: Record<string, MetaValue>;
 };
 
 type WalletTransactionParams = {
   walletAddress?: string;
   tx?: string;
-  meta?: Record<string, unknown>;
+  meta?: Record<string, MetaValue>;
 };
 
 /**
@@ -58,10 +64,7 @@ export class SegmentoClient {
 
   private readonly apiOptions: ApiOptions;
 
-  private constructor(
-    decoded: TokenPayload,
-    apiOptions: ApiOptions,
-  ) {
+  private constructor(decoded: TokenPayload, apiOptions: ApiOptions) {
     this.projectId = decoded.pid;
     this.projectName = decoded.name;
     this.apiOptions = apiOptions;
@@ -93,7 +96,9 @@ export class SegmentoClient {
   static getInstanceOrThrow(): SegmentoClient {
     const instance = SegmentoClient.getInstance();
     if (!instance) {
-      throw new Error("SegmentoClient not initialised. Call SegmentoClient.init() first.");
+      throw new Error(
+        "SegmentoClient not initialised. Call SegmentoClient.init() first.",
+      );
     }
     return instance;
   }
@@ -117,7 +122,8 @@ export class SegmentoClient {
       {
         projectId: this.projectId,
         originUrl: window.location.href,
-        referralCode: getReferralCode() ?? getSessionCookie(REF_COOKIE) ?? undefined,
+        referralCode:
+          getReferralCode() ?? getSessionCookie(REF_COOKIE) ?? undefined,
         ...params,
       },
       this.apiOptions,
@@ -130,7 +136,8 @@ export class SegmentoClient {
       {
         projectId: this.projectId,
         originUrl: window.location.href,
-        referralCode: getReferralCode() ?? getSessionCookie(REF_COOKIE) ?? undefined,
+        referralCode:
+          getReferralCode() ?? getSessionCookie(REF_COOKIE) ?? undefined,
         ...params,
       },
       this.apiOptions,
@@ -143,7 +150,8 @@ export class SegmentoClient {
       {
         projectId: this.projectId,
         originUrl: window.location.href,
-        referralCode: getReferralCode() ?? getSessionCookie(REF_COOKIE) ?? undefined,
+        referralCode:
+          getReferralCode() ?? getSessionCookie(REF_COOKIE) ?? undefined,
         ...params,
       },
       this.apiOptions,
@@ -159,6 +167,8 @@ export function trackWalletConnect(params: WalletConnectParams = {}): void {
   SegmentoClient.getInstanceOrThrow().trackWalletConnect(params);
 }
 
-export function trackWalletTransaction(params: WalletTransactionParams = {}): void {
+export function trackWalletTransaction(
+  params: WalletTransactionParams = {},
+): void {
   SegmentoClient.getInstanceOrThrow().trackWalletTransaction(params);
 }
