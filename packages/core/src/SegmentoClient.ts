@@ -38,11 +38,13 @@ type CaptureLeadParams = {
 
 type WalletConnectParams = {
   walletAddress?: string;
+  chain?: string;
   meta?: Record<string, MetaValue>;
 };
 
 type WalletTransactionParams = {
   walletAddress?: string;
+  chain?: string;
   tx?: string;
   meta?: Record<string, MetaValue>;
 };
@@ -132,13 +134,15 @@ export class SegmentoClient {
 
   /** Tracks a wallet connect event. `project_id`, `origin_url`, and `referral_code` are injected automatically. */
   trackWalletConnect(params: WalletConnectParams = {}): void {
+    const { chain, ...rest } = params;
     trackWalletConnectRaw(
       {
         projectId: this.projectId,
         originUrl: window.location.href,
         referralCode:
           getReferralCode() ?? getSessionCookie(REF_COOKIE) ?? undefined,
-        ...params,
+        walletChain: chain,
+        ...rest,
       },
       this.apiOptions,
     );
@@ -146,13 +150,15 @@ export class SegmentoClient {
 
   /** Tracks a wallet transaction event. `project_id`, `origin_url`, and `referral_code` are injected automatically. */
   trackWalletTransaction(params: WalletTransactionParams = {}): void {
+    const { chain, ...rest } = params;
     trackWalletTransactionRaw(
       {
         projectId: this.projectId,
         originUrl: window.location.href,
         referralCode:
           getReferralCode() ?? getSessionCookie(REF_COOKIE) ?? undefined,
-        ...params,
+        walletChain: chain,
+        ...rest,
       },
       this.apiOptions,
     );

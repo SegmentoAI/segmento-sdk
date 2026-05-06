@@ -32,6 +32,7 @@ export interface TrackWalletConnectOptions {
   projectId: string;
   originUrl: string;
   walletAddress?: string;
+  walletChain?: string;
   referralCode?: string;
   meta?: Record<string, MetaValue>;
 }
@@ -40,6 +41,7 @@ export interface TrackWalletTransactionOptions {
   projectId: string;
   originUrl: string;
   walletAddress?: string;
+  walletChain?: string;
   referralCode?: string;
   tx?: string;
   meta?: Record<string, MetaValue>;
