@@ -8,7 +8,7 @@
   <script type="importmap">
     {
       "imports": {
-        "@segmento/core": "https://esm.sh/@segmento/core@0.8.1"
+        "@segmento/core": "https://esm.sh/@segmento/core@0.10.0"
       }
     }
   </script>
@@ -150,6 +150,7 @@
 
     const TOKEN = "eyJ2IjoxLCJwaWQiOiJ0ZXN0LXByb2plY3QiLCJuYW1lIjoiVGVzdCBQcm9qZWN0IiwiY2hrIjoiYzQwOTZhNDUifQ";
     const MOCK_WALLET_ADDRESS = "MockWallet111111111111111111111111111111111";
+    const MOCK_CHAIN = "solana";
 
     SegmentoClient.init(TOKEN,
       // example sends events to staging - do not set this in production
@@ -164,16 +165,18 @@
     document.getElementById("connect-btn").addEventListener("click", () => {
       trackWalletConnect({
         walletAddress: MOCK_WALLET_ADDRESS,
+        chain: MOCK_CHAIN,
       });
-      writeLog("Sent wallet-connect event", { walletAddress: MOCK_WALLET_ADDRESS });
+      writeLog("Sent wallet-connect event", { walletAddress: MOCK_WALLET_ADDRESS, chain: MOCK_CHAIN });
     });
 
     document.getElementById("transaction-btn").addEventListener("click", () => {
       trackWalletTransaction({
         walletAddress: MOCK_WALLET_ADDRESS,
+        chain: MOCK_CHAIN,
         tx: "0x12345",
       });
-      writeLog("Sent wallet-transaction event", { walletAddress: MOCK_WALLET_ADDRESS, tx: "0x12345" });
+      writeLog("Sent wallet-transaction event", { walletAddress: MOCK_WALLET_ADDRESS, chain: MOCK_CHAIN, tx: "0x12345" });
     });
   </script>
 </body>
