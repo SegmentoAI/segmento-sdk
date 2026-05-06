@@ -1,6 +1,6 @@
 {
   "name": "@segmento/analytics",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Segmento analytics — referral impression tracking",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

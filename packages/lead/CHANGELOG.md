@@ -1,5 +1,12 @@
 # @segmento/lead
 
+## 0.5.5
+
+### Patch Changes
+
+- Updated dependencies [2b56636]
+  - @segmento/core@0.10.0
+
 ## 0.5.4
 
 ### Patch Changes

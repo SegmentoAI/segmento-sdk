@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.10.0
+
+### Minor Changes
+
+- 2b56636: add wallet chain to wallet events
+
 ## 0.9.1
 
 ### Patch Changes
