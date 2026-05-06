@@ -1,6 +1,6 @@
 {
   "name": "@segmento/core",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "Segmento API client — shared across SDK packages",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
