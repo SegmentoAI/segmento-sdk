@@ -1,6 +1,19 @@
-import { segmentoAnalytics } from "./segmentoAnalytics.js";
+import { initAnalytics, segmentoTag } from "./index.js";
+
+declare global {
+  interface Window {
+    segmentoTag: typeof segmentoTag;
+  }
+}
 
 const script = document.currentScript as HTMLScriptElement | null;
-const baseUrl = script?.dataset.apiUrl;
+const projectId = script?.dataset.projectId;
+const analyticsUrl = script?.dataset.apiUrl;
 
-segmentoAnalytics(baseUrl ? { baseUrl } : {});
+window.segmentoTag = segmentoTag;
+
+if (projectId) {
+  initAnalytics(projectId, analyticsUrl ? { analyticsUrl } : {});
+} else {
+  console.warn("[Segmento] data-project-id missing on script tag");
+}

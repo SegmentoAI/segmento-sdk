@@ -1,15 +1,50 @@
 import type {
   ApiOptions,
   CaptureLeadOptions,
+  CollectEventOptions,
   SubmitLeadRequest,
   TrackWalletConnectOptions,
   TrackWalletTransactionOptions,
 } from "./types.js";
 
 const DEFAULT_BASE_URL = "https://referral.segmento.tech/manager-api";
+const DEFAULT_ANALYTICS_URL = "https://referral.segmento.tech/-/v1";
 
 function getBaseUrl(options: ApiOptions): string {
   return (options.baseUrl ?? DEFAULT_BASE_URL).replace(/\/+$/, "");
+}
+
+function getAnalyticsUrl(options: ApiOptions): string {
+  return (options.analyticsUrl ?? DEFAULT_ANALYTICS_URL).replace(/\/+$/, "");
+}
+
+export function collectEvent(
+  options: CollectEventOptions,
+  apiOptions: ApiOptions = {},
+): void {
+  const analyticsUrl = getAnalyticsUrl(apiOptions);
+  const fetchImpl = apiOptions.fetchImpl ?? fetch;
+
+  fetchImpl(`${analyticsUrl}/collect`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      project_id: options.projectId,
+      event_type: options.eventType,
+      event_name: options.eventName,
+      session_id: options.sessionId,
+      page_url: options.pageUrl,
+      page_referrer: options.pageReferrer,
+      page_title: options.pageTitle,
+      referral_code: options.referralCode,
+      utm_source: options.utmSource,
+      utm_medium: options.utmMedium,
+      utm_campaign: options.utmCampaign,
+      utm_term: options.utmTerm,
+      utm_content: options.utmContent,
+      properties: options.properties,
+    }),
+  }).catch(() => {});
 }
 
 export async function submitLead(

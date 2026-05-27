@@ -22,6 +22,7 @@
     "build": "tsc --noEmit && vite build && vite build --config vite.iife.config.mts",
     "dev": "tsc --watch",
     "lint": "tsc --noEmit",
+    "test": "vitest run",
     "clean": "rm -rf dist"
   },
   "dependencies": {
