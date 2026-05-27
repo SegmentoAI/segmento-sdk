@@ -1,5 +1,16 @@
 # @segmento/analytics
 
+## 0.4.0
+
+### Minor Changes
+
+- f76c47f: segmento tag
+
+### Patch Changes
+
+- Updated dependencies [f76c47f]
+  - @segmento/core@0.11.0
+
 ## 0.3.5
 
 ### Patch Changes
