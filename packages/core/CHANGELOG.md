@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.11.0
+
+### Minor Changes
+
+- f76c47f: segmento tag
+
 ## 0.10.0
 
 ### Minor Changes
