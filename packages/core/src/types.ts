@@ -56,9 +56,54 @@ export interface CaptureLeadOptions {
   meta?: Record<string, MetaValue>;
 }
 
+export interface CollectEventOptions {
+  projectId: string;
+  eventType: string;
+  eventName?: string;
+  sessionId?: string;
+  pageUrl: string;
+  pageReferrer?: string;
+  pageTitle?: string;
+  referralCode?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmTerm?: string;
+  utmContent?: string;
+  properties?: Record<string, MetaValue>;
+}
+
+export interface AnalyticsEvent {
+  id: string;
+  project_id: string;
+  event_type: string;
+  event_name: string | null;
+  session_id: string | null;
+  page_url: string;
+  hostname: string;
+  page_referrer: string | null;
+  page_title: string | null;
+  referral_code: string | null;
+  utm_source: string | null;
+  utm_medium: string | null;
+  utm_campaign: string | null;
+  utm_term: string | null;
+  utm_content: string | null;
+  country_code: string | null;
+  ip_hash: string | null;
+  ua_string_hash: string | null;
+  browser: string | null;
+  os: string | null;
+  device_type: string | null;
+  properties: Record<string, unknown> | null;
+  created_at: string;
+}
+
 export interface ApiOptions {
   /** Base URL of the Segmento backend (defaults to the hosted API) */
   baseUrl?: string;
+  /** Base URL for the analytics collect endpoint (defaults to the hosted analytics API) */
+  analyticsUrl?: string;
   /** Override the fetch implementation (defaults to global fetch) */
   fetchImpl?: typeof fetch;
 }

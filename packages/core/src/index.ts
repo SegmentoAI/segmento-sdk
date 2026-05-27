@@ -1,7 +1,25 @@
-export { SegmentoClient, captureLead, trackWalletConnect, trackWalletTransaction, sendImpression } from "./SegmentoClient.js";
-export { submitLead, redeemReferral } from "./api.js";
+export {
+  SegmentoClient,
+  captureLead,
+  trackWalletConnect,
+  trackWalletTransaction,
+  sendImpression,
+} from "./SegmentoClient.js";
+export { submitLead, redeemReferral, collectEvent } from "./api.js";
 export { encodeToken, decodeToken } from "./token.js";
 export { getReferralCode, REFERRAL_PARAM } from "./referral.js";
 export type { TokenPayload } from "./token.js";
-export type { ApiOptions, CaptureLeadOptions, SolanaWalletProof, SubmitLeadRequest, WalletProof } from "./types.js";
-export { setSessionCookie, getSessionCookie, clearSessionCookie } from "./cookies.js";
+export type {
+  AnalyticsEvent,
+  ApiOptions,
+  CaptureLeadOptions,
+  CollectEventOptions,
+  SolanaWalletProof,
+  SubmitLeadRequest,
+  WalletProof,
+} from "./types.js";
+export {
+  setSessionCookie,
+  getSessionCookie,
+  clearSessionCookie,
+} from "./cookies.js";
