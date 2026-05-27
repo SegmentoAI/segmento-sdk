@@ -1,47 +1,71 @@
 # @segmento/analytics
 
-Referral impression tracking for the [Segmento](https://segmento.tech) SDK via a standalone script tag. For projects using `@segmento/core`, impression tracking runs automatically inside `SegmentoClient.init()` — this package is for pages that include only the tracking script without the full SDK.
+Analytics tracking for [Segmento](https://segmento.tech) — pageviews, custom events, session tracking, UTM attribution, and referral attribution. Works as a script tag (like Google Tag) or as an npm module in any framework.
 
-## Usage
+## Script tag
 
-Add this at the end of your `<body>`. The script runs automatically on load.
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/@segmento/analytics@latest/dist/script.js"></script>
-```
-
-To use a custom API base URL (e.g. staging):
+Add to your `<head>`. Pageview is sent automatically on load. SPA navigation is tracked automatically via `history.pushState` / `popstate`.
 
 ```html
 <script
   src="https://cdn.jsdelivr.net/npm/@segmento/analytics@latest/dist/script.js"
-  data-api-url="https://staging.segmento.tech/manager-api"
+  data-project-id="your-project-id"
 ></script>
 ```
 
-## Behaviour
+To override the API URL (e.g. staging):
 
-1. Reads the `?ref=` query parameter from the current URL.
-2. If present, stores it in a `sgm_ref` session cookie — picked up automatically by `@segmento/lead` on form submission.
-3. Fires a `POST /redeem` impression to the Segmento API with the full page URL.
-4. Sets a `sgm_impression_sent` session cookie so the impression is only sent once per session.
+```html
+<script
+  src="https://cdn.jsdelivr.net/npm/@segmento/analytics@latest/dist/script.js"
+  data-project-id="your-project-id"
+  data-api-url="https://staging-referral.segmento.tech/-/v1"
+></script>
+```
 
-The impression request is fire-and-forget — it never blocks the page.
+Custom events are available globally after the script loads:
 
-## Using with a bundler
+```js
+segmentoTag("wallet_connected", { wallet_address: "8xKp...", chain: "solana" });
+```
 
-If you are already using `@segmento/core`, you do not need this package. `SegmentoClient.init()` handles impression tracking automatically.
+Events called before the script initialises are queued and replayed automatically.
 
-If you need impression tracking without the full SDK:
+## npm / framework
 
 ```bash
 npm install @segmento/analytics
 ```
 
 ```ts
-import { segmentoAnalytics } from "@segmento/analytics";
+import { initAnalytics, segmentoTag } from "@segmento/analytics";
 
-segmentoAnalytics();
-// or with a custom base URL:
-segmentoAnalytics({ baseUrl: "https://staging.segmento.tech/manager-api" });
+// Call once at your app root
+initAnalytics("your-project-id");
+
+// Anywhere in your app
+segmentoTag("wallet_connected", { wallet_address: "8xKp...", chain: "solana" });
 ```
+
+## Automatic data collection
+
+Every event (pageview and custom) includes:
+
+| Field | Source |
+|---|---|
+| `page_url` | `window.location.href` |
+| `page_referrer` | `document.referrer` |
+| `page_title` | `document.title` |
+| `session_id` | UUID generated once per tab (`sessionStorage`) |
+| `referral_code` | `?ref=` param captured on landing (`sessionStorage`) |
+| `utm_*` | UTM params captured on landing (`sessionStorage`) |
+
+All session data lives in `sessionStorage` — it dies with the tab and no cookies are set.
+
+## Custom events
+
+```js
+segmentoTag("event_name", { key: "value" });
+```
+
+Sent as `event_type: "custom"` with `event_name` set to the first argument. The second argument is passed as `properties`.
