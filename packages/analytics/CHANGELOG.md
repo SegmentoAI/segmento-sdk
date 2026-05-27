@@ -1,5 +1,11 @@
 # @segmento/analytics
 
+## 0.4.1
+
+### Patch Changes
+
+- 4d13f58: chore: update README
+
 ## 0.4.0
 
 ### Minor Changes
