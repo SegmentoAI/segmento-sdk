@@ -5,7 +5,7 @@ export {
   trackWalletTransaction,
   sendImpression,
 } from "./SegmentoClient.js";
-export { submitLead, redeemReferral, collectEvent } from "./api.js";
+export { submitLead, redeemReferral, collectEvent, sendHeartbeat } from "./api.js";
 export { encodeToken, decodeToken } from "./token.js";
 export { getReferralCode, REFERRAL_PARAM } from "./referral.js";
 export type { TokenPayload } from "./token.js";
@@ -14,6 +14,7 @@ export type {
   ApiOptions,
   CaptureLeadOptions,
   CollectEventOptions,
+  HeartbeatOptions,
   SolanaWalletProof,
   SubmitLeadRequest,
   WalletProof,

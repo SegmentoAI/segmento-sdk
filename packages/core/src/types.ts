@@ -99,6 +99,12 @@ export interface AnalyticsEvent {
   created_at: string;
 }
 
+export interface HeartbeatOptions {
+  projectId: string;
+  sessionId: string;
+  hostname: string;
+}
+
 export interface ApiOptions {
   /** Base URL of the Segmento backend (defaults to the hosted API) */
   baseUrl?: string;

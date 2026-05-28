@@ -2,6 +2,7 @@ import type {
   ApiOptions,
   CaptureLeadOptions,
   CollectEventOptions,
+  HeartbeatOptions,
   SubmitLeadRequest,
   TrackWalletConnectOptions,
   TrackWalletTransactionOptions,
@@ -43,6 +44,24 @@ export function collectEvent(
       utm_term: options.utmTerm,
       utm_content: options.utmContent,
       properties: options.properties,
+    }),
+  }).catch(() => {});
+}
+
+export function sendHeartbeat(
+  options: HeartbeatOptions,
+  apiOptions: ApiOptions = {},
+): void {
+  const analyticsUrl = getAnalyticsUrl(apiOptions);
+  const fetchImpl = apiOptions.fetchImpl ?? fetch;
+
+  fetchImpl(`${analyticsUrl}/heartbeat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      project_id: options.projectId,
+      session_id: options.sessionId,
+      hostname: options.hostname,
     }),
   }).catch(() => {});
 }

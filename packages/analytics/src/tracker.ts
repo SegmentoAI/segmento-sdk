@@ -1,4 +1,4 @@
-import { collectEvent } from "@segmento/core";
+import { collectEvent, sendHeartbeat } from "@segmento/core";
 import type { ApiOptions } from "@segmento/core";
 import {
   getSessionId,
@@ -15,12 +15,27 @@ interface TrackerState {
 let state: TrackerState | null = null;
 let historyPatched = false;
 
+const HEARTBEAT_INTERVAL_MS = 10_000;
+
 export function init(projectId: string, options: ApiOptions = {}): void {
   if (typeof window === "undefined") return;
   state = { projectId, options };
   captureFromUrl();
   pageview();
   patchHistory();
+  setInterval(heartbeat, HEARTBEAT_INTERVAL_MS);
+}
+
+function heartbeat(): void {
+  if (!state) return;
+  sendHeartbeat(
+    {
+      projectId: state.projectId,
+      sessionId: getSessionId(),
+      hostname: window.location.hostname,
+    },
+    state.options,
+  );
 }
 
 export function pageview(): void {
