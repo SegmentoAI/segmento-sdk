@@ -1,5 +1,16 @@
 # @segmento/analytics
 
+## 0.5.0
+
+### Minor Changes
+
+- 6985d46: analytics heartbeat
+
+### Patch Changes
+
+- Updated dependencies [6985d46]
+  - @segmento/core@0.12.0
+
 ## 0.4.1
 
 ### Patch Changes
