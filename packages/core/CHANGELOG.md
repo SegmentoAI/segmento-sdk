@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.12.0
+
+### Minor Changes
+
+- 6985d46: analytics heartbeat
+
 ## 0.11.0
 
 ### Minor Changes
