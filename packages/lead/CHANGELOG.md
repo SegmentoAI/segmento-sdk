@@ -1,5 +1,13 @@
 # @segmento/lead
 
+## 0.5.11
+
+### Patch Changes
+
+- 1542839: fix trusted publishing
+- Updated dependencies [1542839]
+  - @segmento/core@0.12.4
+
 ## 0.5.10
 
 ### Patch Changes

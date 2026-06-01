@@ -1,5 +1,15 @@
 # @segmento/waitlist-ui
 
+## 0.7.13
+
+### Patch Changes
+
+- 1542839: fix trusted publishing
+- Updated dependencies [1542839]
+  - @segmento/solana@0.2.13
+  - @segmento/core@0.12.4
+  - @segmento/lead@0.5.11
+
 ## 0.7.12
 
 ### Patch Changes

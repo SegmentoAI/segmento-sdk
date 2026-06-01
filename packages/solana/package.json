@@ -1,6 +1,6 @@
 {
   "name": "@segmento/solana",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "Solana wallet signing utilities for the Segmento SDK",
   "repository": {
     "type": "git",
