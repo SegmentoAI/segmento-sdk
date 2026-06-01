@@ -2,6 +2,10 @@
   "name": "@segmento/analytics",
   "version": "0.5.3",
   "description": "Segmento analytics — referral impression tracking",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SegmentoAI/segmento-sdk"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

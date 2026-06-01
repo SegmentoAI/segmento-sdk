@@ -2,6 +2,10 @@
   "name": "@segmento/lead",
   "version": "0.5.10",
   "description": "Referral code generation for Segmento",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SegmentoAI/segmento-sdk"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

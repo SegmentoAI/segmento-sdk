@@ -2,6 +2,10 @@
   "name": "@segmento/solana",
   "version": "0.2.12",
   "description": "Solana wallet signing utilities for the Segmento SDK",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SegmentoAI/segmento-sdk"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -8,7 +8,7 @@
     "test": "pnpm -r --if-present run test",
     "clean": "pnpm -r --if-present run clean",
     "version": "pnpm changeset version",
-    "release": "pnpm build && pnpm changeset publish",
+    "release": "pnpm changeset publish",
     "example": "npx serve . --listen 3333 --no-clipboard",
     "example:ui": "npx serve . --listen 3333 --no-clipboard --open example/ui-package/index.html",
     "example:custom": "npx serve . --listen 3333 --no-clipboard --open example/custom-ui/index.html",
