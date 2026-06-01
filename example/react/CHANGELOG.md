@@ -1,5 +1,12 @@
 # @segmento/example-react
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [1542839]
+  - @segmento/react-waitlist-ui@0.3.13
+
 ## 0.1.4
 
 ### Patch Changes

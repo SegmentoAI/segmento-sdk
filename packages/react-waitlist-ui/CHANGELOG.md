@@ -1,5 +1,14 @@
 # @segmento/react-waitlist-ui
 
+## 0.3.13
+
+### Patch Changes
+
+- 1542839: fix trusted publishing
+- Updated dependencies [1542839]
+  - @segmento/waitlist-ui@0.7.13
+  - @segmento/core@0.12.4
+
 ## 0.3.12
 
 ### Patch Changes

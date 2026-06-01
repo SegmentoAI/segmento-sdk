@@ -1,5 +1,13 @@
 # @segmento/analytics
 
+## 0.5.4
+
+### Patch Changes
+
+- 1542839: fix trusted publishing
+- Updated dependencies [1542839]
+  - @segmento/core@0.12.4
+
 ## 0.5.3
 
 ### Patch Changes

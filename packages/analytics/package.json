@@ -1,6 +1,6 @@
 {
   "name": "@segmento/analytics",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Segmento analytics — referral impression tracking",
   "repository": {
     "type": "git",
