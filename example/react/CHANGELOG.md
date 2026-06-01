@@ -1,5 +1,13 @@
 # @segmento/example-react
 
+## 0.1.3
+
+### Patch Changes
+
+- 95fdfeb: fix lockfile
+- Updated dependencies [95fdfeb]
+  - @segmento/react-waitlist-ui@0.3.11
+
 ## 0.1.2
 
 ### Patch Changes

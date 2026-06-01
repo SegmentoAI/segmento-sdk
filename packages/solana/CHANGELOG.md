@@ -1,5 +1,13 @@
 # @segmento/solana
 
+## 0.2.11
+
+### Patch Changes
+
+- 95fdfeb: fix lockfile
+- Updated dependencies [95fdfeb]
+  - @segmento/core@0.12.2
+
 ## 0.2.10
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @segmento/analytics
 
+## 0.5.2
+
+### Patch Changes
+
+- 95fdfeb: fix lockfile
+- Updated dependencies [95fdfeb]
+  - @segmento/core@0.12.2
+
 ## 0.5.1
 
 ### Patch Changes
