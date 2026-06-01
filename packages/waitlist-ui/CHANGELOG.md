@@ -1,5 +1,15 @@
 # @segmento/waitlist-ui
 
+## 0.7.12
+
+### Patch Changes
+
+- 945a68f: switch to npm trusted publishing
+- Updated dependencies [945a68f]
+  - @segmento/core@0.12.3
+  - @segmento/lead@0.5.10
+  - @segmento/solana@0.2.12
+
 ## 0.7.11
 
 ### Patch Changes
