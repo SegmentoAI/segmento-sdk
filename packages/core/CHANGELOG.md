@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.12.3
+
+### Patch Changes
+
+- 945a68f: switch to npm trusted publishing
+
 ## 0.12.2
 
 ### Patch Changes
