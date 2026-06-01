@@ -1,5 +1,14 @@
 # @segmento/react-waitlist-ui
 
+## 0.3.11
+
+### Patch Changes
+
+- 95fdfeb: fix lockfile
+- Updated dependencies [95fdfeb]
+  - @segmento/core@0.12.2
+  - @segmento/waitlist-ui@0.7.11
+
 ## 0.3.10
 
 ### Patch Changes

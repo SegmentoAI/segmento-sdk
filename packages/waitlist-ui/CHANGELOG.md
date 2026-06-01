@@ -1,5 +1,15 @@
 # @segmento/waitlist-ui
 
+## 0.7.11
+
+### Patch Changes
+
+- 95fdfeb: fix lockfile
+- Updated dependencies [95fdfeb]
+  - @segmento/core@0.12.2
+  - @segmento/lead@0.5.9
+  - @segmento/solana@0.2.11
+
 ## 0.7.10
 
 ### Patch Changes

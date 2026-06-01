@@ -1,5 +1,11 @@
 # @segmento/core
 
+## 0.12.2
+
+### Patch Changes
+
+- 95fdfeb: fix lockfile
+
 ## 0.12.1
 
 ### Patch Changes
