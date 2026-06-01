@@ -1,5 +1,13 @@
 # @segmento/example-react
 
+## 0.1.2
+
+### Patch Changes
+
+- 66f9230: switch to npm trusted publishing
+- Updated dependencies [66f9230]
+  - @segmento/react-waitlist-ui@0.3.10
+
 ## 0.1.1
 
 ### Patch Changes

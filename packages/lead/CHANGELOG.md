@@ -1,5 +1,13 @@
 # @segmento/lead
 
+## 0.5.8
+
+### Patch Changes
+
+- 66f9230: switch to npm trusted publishing
+- Updated dependencies [66f9230]
+  - @segmento/core@0.12.1
+
 ## 0.5.7
 
 ### Patch Changes
