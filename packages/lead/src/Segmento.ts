@@ -8,7 +8,7 @@ import type {
 
 const REF_COOKIE = "sgm_ref";
 
-const DEFAULT_ENDPOINT = "https://api.segmento.io/v1/referral";
+const DEFAULT_ENDPOINT = "https://referral.segmento.tech/manager-api";
 
 /**
  * Main entry point for the Segmento referral SDK.
