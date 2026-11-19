@@ -1,5 +1,11 @@
 # @segmento/react-waitlist-ui
 
+## 0.3.14
+
+### Patch Changes
+
+- @segmento/waitlist-ui@0.7.14
+
 ## 0.3.13
 
 ### Patch Changes

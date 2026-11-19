@@ -1,5 +1,11 @@
 # @segmento/example-react
 
+## 0.1.6
+
+### Patch Changes
+
+- @segmento/react-waitlist-ui@0.3.14
+
 ## 0.1.5
 
 ### Patch Changes
