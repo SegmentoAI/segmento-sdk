@@ -1,6 +1,6 @@
 {
   "name": "@segmento/lead",
-  "version": "0.5.11",
+  "version": "0.5.12",
   "description": "Referral code generation for Segmento",
   "repository": {
     "type": "git",

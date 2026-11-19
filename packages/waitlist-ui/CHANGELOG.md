@@ -1,5 +1,12 @@
 # @segmento/waitlist-ui
 
+## 0.7.14
+
+### Patch Changes
+
+- Updated dependencies [2902927]
+  - @segmento/lead@0.5.12
+
 ## 0.7.13
 
 ### Patch Changes

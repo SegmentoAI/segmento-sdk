@@ -1,5 +1,11 @@
 # @segmento/lead
 
+## 0.5.12
+
+### Patch Changes
+
+- 2902927: Update default endpoint
+
 ## 0.5.11
 
 ### Patch Changes
